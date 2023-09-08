@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -177,12 +178,6 @@ namespace StarlightResize
                 if (!File.Exists(path)) return path;
                 return GetNotExistsFileName(prefix, suffix, i + 1);
             }
-
-            var bitmapCopy = bitmap.Clone() as Bitmap;
-            PInvoke.OpenClipboard(HWND.Null);
-            PInvoke.EmptyClipboard();
-            PInvoke.SetClipboardData(2, new HANDLE(bitmapCopy.GetHbitmap()));
-            PInvoke.CloseClipboard();
 
             var path = GetNotExistsFileName($"{starlightResizePicturesFolder}\\{DateTime.Now.ToString("yyyyMMdd_HHmmss")}", ".png");
             using (var stream = new FileStream(path, FileMode.Create))

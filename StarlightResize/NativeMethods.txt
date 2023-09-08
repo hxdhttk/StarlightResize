@@ -7,7 +7,3 @@ ReleaseDC
 PrintWindow
 PRINT_WINDOW_FLAGS
 PW_RENDERFULLCONTENT
-OpenClipboard
-EmptyClipboard
-SetClipboardData
-CloseClipboard
