@@ -178,7 +178,12 @@ namespace StarlightResize
                 return GetNotExistsFileName(prefix, suffix, i + 1);
             }
 
-            Clipboard.SetImage(Image.FromStream(new MemoryStream(png)));
+            var bitmapCopy = bitmap.Clone() as Bitmap;
+            PInvoke.OpenClipboard(HWND.Null);
+            PInvoke.EmptyClipboard();
+            PInvoke.SetClipboardData(2, new HANDLE(bitmapCopy.GetHbitmap()));
+            PInvoke.CloseClipboard();
+
             var path = GetNotExistsFileName($"{starlightResizePicturesFolder}\\{DateTime.Now.ToString("yyyyMMdd_HHmmss")}", ".png");
             using (var stream = new FileStream(path, FileMode.Create))
             {
