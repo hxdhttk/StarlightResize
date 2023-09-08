@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -17,9 +12,9 @@ using Windows.Win32.Storage.Xps;
 
 namespace StarlightResize
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             ReloadDisplayList();
@@ -55,7 +50,7 @@ namespace StarlightResize
             var hWnd = (HWND)process.MainWindowHandle;
             PInvoke.GetWindowRect(hWnd, out var windowRect);
             PInvoke.GetClientRect(hWnd, out var clientRect);
-            var screenPoint = new POINT();
+            var screenPoint = new Point();
             PInvoke.ClientToScreen(hWnd, ref screenPoint);
             var windowWidth = windowRect.right - windowRect.left;
             var clientWidth = clientRect.right - clientRect.left;
@@ -64,34 +59,35 @@ namespace StarlightResize
             var clientHeight = clientRect.bottom - clientRect.top;
             var frameHeight = windowHeight - clientHeight;
 
-            var newPoint = new POINT();
-            newPoint.x = screen.Bounds.X;
-            newPoint.y = screen.Bounds.Y;
+            var newPoint = new Point();
+            newPoint.X = screen.Bounds.X;
+            newPoint.Y = screen.Bounds.Y;
             if (radioButtonPosCenter.Checked)
             {
                 // 中央寄せ
-                newPoint.x += (screen.Bounds.Width - width) / 2;
-                newPoint.y += (screen.Bounds.Height - height) / 2;
-            } else
+                newPoint.X += (screen.Bounds.Width - width) / 2;
+                newPoint.Y += (screen.Bounds.Height - height) / 2;
+            }
+            else
             {
                 if (radioButtonPosRightBottom.Checked || radioButtonPosLeftBottom.Checked)
                 {
                     // 下寄せ
-                    newPoint.y += screen.Bounds.Height - height;
+                    newPoint.Y += screen.Bounds.Height - height;
                 }
                 if (radioButtonPosRightTop.Checked || radioButtonPosRightBottom.Checked)
                 {
                     // 右寄せ
-                    newPoint.x += screen.Bounds.Width - width;
+                    newPoint.X += screen.Bounds.Width - width;
                 }
             }
-            newPoint.x += windowRect.left - screenPoint.x;
-            newPoint.y += windowRect.top - screenPoint.y;
+            newPoint.X += windowRect.left - screenPoint.X;
+            newPoint.Y += windowRect.top - screenPoint.Y;
 
             // 違うDPIのモニタからウィンドウを移動するとデレステ側？でDPIの差分からのウィンドウサイズ補正がかかる
             // ので2回リサイズ処理を行う
-            PInvoke.MoveWindow(hWnd, newPoint.x, newPoint.y, width + frameWidth, height + frameHeight, true);
-            PInvoke.MoveWindow(hWnd, newPoint.x, newPoint.y, width + frameWidth, height + frameHeight, true);
+            PInvoke.MoveWindow(hWnd, newPoint.X, newPoint.Y, width + frameWidth, height + frameHeight, true);
+            PInvoke.MoveWindow(hWnd, newPoint.X, newPoint.Y, width + frameWidth, height + frameHeight, true);
         }
 
         private void SetResolution(int width, int height)
@@ -130,7 +126,7 @@ namespace StarlightResize
             }
             SetResolution(screen.Bounds.Width, screen.Bounds.Height);
         }
-        
+
         private string getScreenshotFolder()
         {
             var picturesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures, Environment.SpecialFolderOption.Create);
@@ -164,7 +160,7 @@ namespace StarlightResize
             var dc = (HDC)graphics.GetHdc();
             // Windows 7 だと PW_RENDERFULLCONTENT が使えないので動かないかも (いい加減 10 にしてください)
             // というかそもそも Windows.Graphics.Capture API を…
-            bool result = PInvoke.PrintWindow(hWnd, dc, PRINT_WINDOW_FLAGS.PW_CLIENTONLY | (PRINT_WINDOW_FLAGS)Constants.PW_RENDERFULLCONTENT);
+            bool result = PInvoke.PrintWindow(hWnd, dc, PRINT_WINDOW_FLAGS.PW_CLIENTONLY | (PRINT_WINDOW_FLAGS)PInvoke.PW_RENDERFULLCONTENT);
             graphics.ReleaseHdc(dc);
             graphics.Dispose();
             byte[] png;

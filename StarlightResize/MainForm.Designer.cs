@@ -1,7 +1,7 @@
 ﻿
 namespace StarlightResize
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -45,17 +45,17 @@ namespace StarlightResize
             System.Windows.Forms.Button buttonSetResToDisplay;
             System.Windows.Forms.Button buttonScreenShot;
             System.Windows.Forms.Button buttonOpenScreenShotFolder;
-            this.radioButtonPosLeftTop = new System.Windows.Forms.RadioButton();
-            this.radioButtonPosLeftBottom = new System.Windows.Forms.RadioButton();
-            this.radioButtonPosCenter = new System.Windows.Forms.RadioButton();
-            this.radioButtonPosRightBottom = new System.Windows.Forms.RadioButton();
-            this.radioButtonPosRightTop = new System.Windows.Forms.RadioButton();
-            this.comboBoxDisplay = new System.Windows.Forms.ComboBox();
-            this.numericUpDownWidth = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
-            this.checkBoxSetResToDisplayAutomatically = new System.Windows.Forms.CheckBox();
-            this.buttonResize = new System.Windows.Forms.Button();
-            this.labelScreenShotState = new System.Windows.Forms.Label();
+            radioButtonPosLeftTop = new System.Windows.Forms.RadioButton();
+            radioButtonPosLeftBottom = new System.Windows.Forms.RadioButton();
+            radioButtonPosCenter = new System.Windows.Forms.RadioButton();
+            radioButtonPosRightBottom = new System.Windows.Forms.RadioButton();
+            radioButtonPosRightTop = new System.Windows.Forms.RadioButton();
+            comboBoxDisplay = new System.Windows.Forms.ComboBox();
+            numericUpDownWidth = new System.Windows.Forms.NumericUpDown();
+            numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
+            checkBoxSetResToDisplayAutomatically = new System.Windows.Forms.CheckBox();
+            buttonResize = new System.Windows.Forms.Button();
+            labelScreenShotState = new System.Windows.Forms.Label();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             label1 = new System.Windows.Forms.Label();
@@ -75,26 +75,25 @@ namespace StarlightResize
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).BeginInit();
-            this.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownWidth).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownHeight).BeginInit();
+            SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             tableLayoutPanel1.AutoSize = true;
             tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 3);
-            tableLayoutPanel1.Controls.Add(this.comboBoxDisplay, 1, 0);
+            tableLayoutPanel1.Controls.Add(comboBoxDisplay, 1, 0);
             tableLayoutPanel1.Controls.Add(label1, 0, 0);
             tableLayoutPanel1.Controls.Add(label6, 0, 3);
             tableLayoutPanel1.Controls.Add(label2, 0, 1);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 1, 1);
-            tableLayoutPanel1.Controls.Add(this.checkBoxSetResToDisplayAutomatically, 1, 2);
+            tableLayoutPanel1.Controls.Add(checkBoxSetResToDisplayAutomatically, 1, 2);
             tableLayoutPanel1.Location = new System.Drawing.Point(11, 9);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 4;
@@ -102,7 +101,7 @@ namespace StarlightResize
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            tableLayoutPanel1.Size = new System.Drawing.Size(679, 133);
+            tableLayoutPanel1.Size = new System.Drawing.Size(679, 135);
             tableLayoutPanel1.TabIndex = 23;
             // 
             // tableLayoutPanel2
@@ -113,12 +112,12 @@ namespace StarlightResize
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            tableLayoutPanel2.Controls.Add(this.radioButtonPosLeftTop, 0, 0);
-            tableLayoutPanel2.Controls.Add(this.radioButtonPosLeftBottom, 0, 1);
-            tableLayoutPanel2.Controls.Add(this.radioButtonPosCenter, 1, 0);
-            tableLayoutPanel2.Controls.Add(this.radioButtonPosRightBottom, 2, 1);
-            tableLayoutPanel2.Controls.Add(this.radioButtonPosRightTop, 2, 0);
-            tableLayoutPanel2.Location = new System.Drawing.Point(68, 83);
+            tableLayoutPanel2.Controls.Add(radioButtonPosLeftTop, 0, 0);
+            tableLayoutPanel2.Controls.Add(radioButtonPosLeftBottom, 0, 1);
+            tableLayoutPanel2.Controls.Add(radioButtonPosCenter, 1, 0);
+            tableLayoutPanel2.Controls.Add(radioButtonPosRightBottom, 2, 1);
+            tableLayoutPanel2.Controls.Add(radioButtonPosRightTop, 2, 0);
+            tableLayoutPanel2.Location = new System.Drawing.Point(68, 85);
             tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 2;
@@ -129,72 +128,72 @@ namespace StarlightResize
             // 
             // radioButtonPosLeftTop
             // 
-            this.radioButtonPosLeftTop.AutoSize = true;
-            this.radioButtonPosLeftTop.Location = new System.Drawing.Point(3, 3);
-            this.radioButtonPosLeftTop.Name = "radioButtonPosLeftTop";
-            this.radioButtonPosLeftTop.Size = new System.Drawing.Size(49, 19);
-            this.radioButtonPosLeftTop.TabIndex = 14;
-            this.radioButtonPosLeftTop.Text = "左上";
-            this.radioButtonPosLeftTop.UseVisualStyleBackColor = true;
+            radioButtonPosLeftTop.AutoSize = true;
+            radioButtonPosLeftTop.Location = new System.Drawing.Point(3, 3);
+            radioButtonPosLeftTop.Name = "radioButtonPosLeftTop";
+            radioButtonPosLeftTop.Size = new System.Drawing.Size(49, 19);
+            radioButtonPosLeftTop.TabIndex = 14;
+            radioButtonPosLeftTop.Text = "左上";
+            radioButtonPosLeftTop.UseVisualStyleBackColor = true;
             // 
             // radioButtonPosLeftBottom
             // 
-            this.radioButtonPosLeftBottom.AutoSize = true;
-            this.radioButtonPosLeftBottom.Location = new System.Drawing.Point(3, 28);
-            this.radioButtonPosLeftBottom.Name = "radioButtonPosLeftBottom";
-            this.radioButtonPosLeftBottom.Size = new System.Drawing.Size(49, 19);
-            this.radioButtonPosLeftBottom.TabIndex = 17;
-            this.radioButtonPosLeftBottom.Text = "左下";
-            this.radioButtonPosLeftBottom.UseVisualStyleBackColor = true;
+            radioButtonPosLeftBottom.AutoSize = true;
+            radioButtonPosLeftBottom.Location = new System.Drawing.Point(3, 28);
+            radioButtonPosLeftBottom.Name = "radioButtonPosLeftBottom";
+            radioButtonPosLeftBottom.Size = new System.Drawing.Size(49, 19);
+            radioButtonPosLeftBottom.TabIndex = 17;
+            radioButtonPosLeftBottom.Text = "左下";
+            radioButtonPosLeftBottom.UseVisualStyleBackColor = true;
             // 
             // radioButtonPosCenter
             // 
-            this.radioButtonPosCenter.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.radioButtonPosCenter.AutoSize = true;
-            this.radioButtonPosCenter.Checked = true;
-            this.radioButtonPosCenter.Location = new System.Drawing.Point(58, 15);
-            this.radioButtonPosCenter.Name = "radioButtonPosCenter";
-            tableLayoutPanel2.SetRowSpan(this.radioButtonPosCenter, 2);
-            this.radioButtonPosCenter.Size = new System.Drawing.Size(49, 19);
-            this.radioButtonPosCenter.TabIndex = 16;
-            this.radioButtonPosCenter.TabStop = true;
-            this.radioButtonPosCenter.Text = "中央";
-            this.radioButtonPosCenter.UseVisualStyleBackColor = true;
+            radioButtonPosCenter.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            radioButtonPosCenter.AutoSize = true;
+            radioButtonPosCenter.Checked = true;
+            radioButtonPosCenter.Location = new System.Drawing.Point(58, 15);
+            radioButtonPosCenter.Name = "radioButtonPosCenter";
+            tableLayoutPanel2.SetRowSpan(radioButtonPosCenter, 2);
+            radioButtonPosCenter.Size = new System.Drawing.Size(49, 19);
+            radioButtonPosCenter.TabIndex = 16;
+            radioButtonPosCenter.TabStop = true;
+            radioButtonPosCenter.Text = "中央";
+            radioButtonPosCenter.UseVisualStyleBackColor = true;
             // 
             // radioButtonPosRightBottom
             // 
-            this.radioButtonPosRightBottom.AutoSize = true;
-            this.radioButtonPosRightBottom.Location = new System.Drawing.Point(113, 28);
-            this.radioButtonPosRightBottom.Name = "radioButtonPosRightBottom";
-            this.radioButtonPosRightBottom.Size = new System.Drawing.Size(49, 19);
-            this.radioButtonPosRightBottom.TabIndex = 18;
-            this.radioButtonPosRightBottom.Text = "右下";
-            this.radioButtonPosRightBottom.UseVisualStyleBackColor = true;
+            radioButtonPosRightBottom.AutoSize = true;
+            radioButtonPosRightBottom.Location = new System.Drawing.Point(113, 28);
+            radioButtonPosRightBottom.Name = "radioButtonPosRightBottom";
+            radioButtonPosRightBottom.Size = new System.Drawing.Size(49, 19);
+            radioButtonPosRightBottom.TabIndex = 18;
+            radioButtonPosRightBottom.Text = "右下";
+            radioButtonPosRightBottom.UseVisualStyleBackColor = true;
             // 
             // radioButtonPosRightTop
             // 
-            this.radioButtonPosRightTop.AutoSize = true;
-            this.radioButtonPosRightTop.Location = new System.Drawing.Point(113, 3);
-            this.radioButtonPosRightTop.Name = "radioButtonPosRightTop";
-            this.radioButtonPosRightTop.Size = new System.Drawing.Size(49, 19);
-            this.radioButtonPosRightTop.TabIndex = 15;
-            this.radioButtonPosRightTop.Text = "右上";
-            this.radioButtonPosRightTop.UseVisualStyleBackColor = true;
+            radioButtonPosRightTop.AutoSize = true;
+            radioButtonPosRightTop.Location = new System.Drawing.Point(113, 3);
+            radioButtonPosRightTop.Name = "radioButtonPosRightTop";
+            radioButtonPosRightTop.Size = new System.Drawing.Size(49, 19);
+            radioButtonPosRightTop.TabIndex = 15;
+            radioButtonPosRightTop.Text = "右上";
+            radioButtonPosRightTop.UseVisualStyleBackColor = true;
             // 
             // comboBoxDisplay
             // 
-            this.comboBoxDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxDisplay.FormattingEnabled = true;
-            this.comboBoxDisplay.Location = new System.Drawing.Point(71, 3);
-            this.comboBoxDisplay.Name = "comboBoxDisplay";
-            this.comboBoxDisplay.Size = new System.Drawing.Size(605, 23);
-            this.comboBoxDisplay.TabIndex = 3;
+            comboBoxDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            comboBoxDisplay.FormattingEnabled = true;
+            comboBoxDisplay.Location = new System.Drawing.Point(71, 3);
+            comboBoxDisplay.Name = "comboBoxDisplay";
+            comboBoxDisplay.Size = new System.Drawing.Size(605, 23);
+            comboBoxDisplay.TabIndex = 3;
             // 
             // label1
             // 
             label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(3, 7);
+            label1.Location = new System.Drawing.Point(3, 8);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(62, 15);
             label1.TabIndex = 4;
@@ -202,9 +201,9 @@ namespace StarlightResize
             // 
             // label6
             // 
-            label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            label6.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(31, 88);
+            label6.Location = new System.Drawing.Point(31, 90);
             label6.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(34, 15);
@@ -215,7 +214,7 @@ namespace StarlightResize
             // 
             label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(19, 36);
+            label2.Location = new System.Drawing.Point(19, 38);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(46, 15);
             label2.TabIndex = 5;
@@ -225,17 +224,17 @@ namespace StarlightResize
             // 
             flowLayoutPanel1.AutoSize = true;
             flowLayoutPanel1.Controls.Add(label4);
-            flowLayoutPanel1.Controls.Add(this.numericUpDownWidth);
+            flowLayoutPanel1.Controls.Add(numericUpDownWidth);
             flowLayoutPanel1.Controls.Add(label3);
             flowLayoutPanel1.Controls.Add(label5);
-            flowLayoutPanel1.Controls.Add(this.numericUpDownHeight);
+            flowLayoutPanel1.Controls.Add(numericUpDownHeight);
             flowLayoutPanel1.Controls.Add(buttonSetResTo1280);
             flowLayoutPanel1.Controls.Add(buttonSetResTo1920);
             flowLayoutPanel1.Controls.Add(buttonSetResTo2560);
             flowLayoutPanel1.Controls.Add(buttonSetResTo3840);
             flowLayoutPanel1.Controls.Add(buttonSetResToDisplay);
             flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
-            flowLayoutPanel1.Location = new System.Drawing.Point(68, 29);
+            flowLayoutPanel1.Location = new System.Drawing.Point(68, 31);
             flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new System.Drawing.Size(611, 29);
@@ -255,21 +254,13 @@ namespace StarlightResize
             // 
             // numericUpDownWidth
             // 
-            this.numericUpDownWidth.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numericUpDownWidth.Location = new System.Drawing.Point(37, 3);
-            this.numericUpDownWidth.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.numericUpDownWidth.Name = "numericUpDownWidth";
-            this.numericUpDownWidth.Size = new System.Drawing.Size(56, 23);
-            this.numericUpDownWidth.TabIndex = 1;
-            this.numericUpDownWidth.Value = new decimal(new int[] {
-            1280,
-            0,
-            0,
-            0});
+            numericUpDownWidth.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            numericUpDownWidth.Location = new System.Drawing.Point(37, 3);
+            numericUpDownWidth.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
+            numericUpDownWidth.Name = "numericUpDownWidth";
+            numericUpDownWidth.Size = new System.Drawing.Size(56, 23);
+            numericUpDownWidth.TabIndex = 1;
+            numericUpDownWidth.Value = new decimal(new int[] { 1280, 0, 0, 0 });
             // 
             // label3
             // 
@@ -293,21 +284,13 @@ namespace StarlightResize
             // 
             // numericUpDownHeight
             // 
-            this.numericUpDownHeight.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.numericUpDownHeight.Location = new System.Drawing.Point(155, 3);
-            this.numericUpDownHeight.Maximum = new decimal(new int[] {
-            65535,
-            0,
-            0,
-            0});
-            this.numericUpDownHeight.Name = "numericUpDownHeight";
-            this.numericUpDownHeight.Size = new System.Drawing.Size(56, 23);
-            this.numericUpDownHeight.TabIndex = 2;
-            this.numericUpDownHeight.Value = new decimal(new int[] {
-            720,
-            0,
-            0,
-            0});
+            numericUpDownHeight.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            numericUpDownHeight.Location = new System.Drawing.Point(155, 3);
+            numericUpDownHeight.Maximum = new decimal(new int[] { 65535, 0, 0, 0 });
+            numericUpDownHeight.Name = "numericUpDownHeight";
+            numericUpDownHeight.Size = new System.Drawing.Size(56, 23);
+            numericUpDownHeight.TabIndex = 2;
+            numericUpDownHeight.Value = new decimal(new int[] { 720, 0, 0, 0 });
             // 
             // buttonSetResTo1280
             // 
@@ -318,7 +301,7 @@ namespace StarlightResize
             buttonSetResTo1280.TabIndex = 9;
             buttonSetResTo1280.Text = "←長辺1280";
             buttonSetResTo1280.UseVisualStyleBackColor = true;
-            buttonSetResTo1280.Click += new System.EventHandler(this.buttonSetResTo1280_Click);
+            buttonSetResTo1280.Click += buttonSetResTo1280_Click;
             // 
             // buttonSetResTo1920
             // 
@@ -329,7 +312,7 @@ namespace StarlightResize
             buttonSetResTo1920.TabIndex = 10;
             buttonSetResTo1920.Text = "←1920";
             buttonSetResTo1920.UseVisualStyleBackColor = true;
-            buttonSetResTo1920.Click += new System.EventHandler(this.buttonSetResTo1920_Click);
+            buttonSetResTo1920.Click += buttonSetResTo1920_Click;
             // 
             // buttonSetResTo2560
             // 
@@ -340,7 +323,7 @@ namespace StarlightResize
             buttonSetResTo2560.TabIndex = 20;
             buttonSetResTo2560.Text = "←2560";
             buttonSetResTo2560.UseVisualStyleBackColor = true;
-            buttonSetResTo2560.Click += new System.EventHandler(this.buttonSetResTo2560_Click);
+            buttonSetResTo2560.Click += buttonSetResTo2560_Click;
             // 
             // buttonSetResTo3840
             // 
@@ -350,7 +333,7 @@ namespace StarlightResize
             buttonSetResTo3840.TabIndex = 21;
             buttonSetResTo3840.Text = "←3840";
             buttonSetResTo3840.UseVisualStyleBackColor = true;
-            buttonSetResTo3840.Click += new System.EventHandler(this.buttonSetResTo3840_Click);
+            buttonSetResTo3840.Click += buttonSetResTo3840_Click;
             // 
             // buttonSetResToDisplay
             // 
@@ -361,18 +344,18 @@ namespace StarlightResize
             buttonSetResToDisplay.TabIndex = 11;
             buttonSetResToDisplay.Text = "←ディスプレイ解像度";
             buttonSetResToDisplay.UseVisualStyleBackColor = true;
-            buttonSetResToDisplay.Click += new System.EventHandler(this.buttonSetResToDisplay_Click);
+            buttonSetResToDisplay.Click += buttonSetResToDisplay_Click;
             // 
             // checkBoxSetResToDisplayAutomatically
             // 
-            this.checkBoxSetResToDisplayAutomatically.AutoSize = true;
-            this.checkBoxSetResToDisplayAutomatically.Enabled = false;
-            this.checkBoxSetResToDisplayAutomatically.Location = new System.Drawing.Point(71, 61);
-            this.checkBoxSetResToDisplayAutomatically.Name = "checkBoxSetResToDisplayAutomatically";
-            this.checkBoxSetResToDisplayAutomatically.Size = new System.Drawing.Size(287, 19);
-            this.checkBoxSetResToDisplayAutomatically.TabIndex = 12;
-            this.checkBoxSetResToDisplayAutomatically.Text = "ディスプレイ変更時に解像度を自動更新 (現在未実装)";
-            this.checkBoxSetResToDisplayAutomatically.UseVisualStyleBackColor = true;
+            checkBoxSetResToDisplayAutomatically.AutoSize = true;
+            checkBoxSetResToDisplayAutomatically.Enabled = false;
+            checkBoxSetResToDisplayAutomatically.Location = new System.Drawing.Point(71, 63);
+            checkBoxSetResToDisplayAutomatically.Name = "checkBoxSetResToDisplayAutomatically";
+            checkBoxSetResToDisplayAutomatically.Size = new System.Drawing.Size(287, 19);
+            checkBoxSetResToDisplayAutomatically.TabIndex = 12;
+            checkBoxSetResToDisplayAutomatically.Text = "ディスプレイ変更時に解像度を自動更新 (現在未実装)";
+            checkBoxSetResToDisplayAutomatically.UseVisualStyleBackColor = true;
             // 
             // buttonScreenShot
             // 
@@ -382,7 +365,7 @@ namespace StarlightResize
             buttonScreenShot.TabIndex = 24;
             buttonScreenShot.Text = "スクリーンショット";
             buttonScreenShot.UseVisualStyleBackColor = true;
-            buttonScreenShot.Click += new System.EventHandler(this.buttonScreenShot_Click);
+            buttonScreenShot.Click += buttonScreenShot_Click;
             // 
             // buttonOpenScreenShotFolder
             // 
@@ -392,54 +375,53 @@ namespace StarlightResize
             buttonOpenScreenShotFolder.TabIndex = 25;
             buttonOpenScreenShotFolder.Text = "SSの保存場所を開く";
             buttonOpenScreenShotFolder.UseVisualStyleBackColor = true;
-            buttonOpenScreenShotFolder.Click += new System.EventHandler(this.buttonOpenScreenShotFolder_Click);
+            buttonOpenScreenShotFolder.Click += buttonOpenScreenShotFolder_Click;
             // 
             // buttonResize
             // 
-            this.buttonResize.Location = new System.Drawing.Point(11, 148);
-            this.buttonResize.Name = "buttonResize";
-            this.buttonResize.Size = new System.Drawing.Size(75, 23);
-            this.buttonResize.TabIndex = 22;
-            this.buttonResize.Text = "実行！";
-            this.buttonResize.UseVisualStyleBackColor = true;
-            this.buttonResize.Click += new System.EventHandler(this.buttonResize_Click);
+            buttonResize.Location = new System.Drawing.Point(11, 148);
+            buttonResize.Name = "buttonResize";
+            buttonResize.Size = new System.Drawing.Size(75, 23);
+            buttonResize.TabIndex = 22;
+            buttonResize.Text = "実行！";
+            buttonResize.UseVisualStyleBackColor = true;
+            buttonResize.Click += buttonResize_Click;
             // 
             // labelScreenShotState
             // 
-            this.labelScreenShotState.AutoSize = true;
-            this.labelScreenShotState.Location = new System.Drawing.Point(116, 182);
-            this.labelScreenShotState.Name = "labelScreenShotState";
-            this.labelScreenShotState.Size = new System.Drawing.Size(55, 15);
-            this.labelScreenShotState.TabIndex = 26;
-            this.labelScreenShotState.Text = "準備完了";
-            this.labelScreenShotState.UseMnemonic = false;
+            labelScreenShotState.AutoSize = true;
+            labelScreenShotState.Location = new System.Drawing.Point(116, 182);
+            labelScreenShotState.Name = "labelScreenShotState";
+            labelScreenShotState.Size = new System.Drawing.Size(55, 15);
+            labelScreenShotState.TabIndex = 26;
+            labelScreenShotState.Text = "準備完了";
+            labelScreenShotState.UseMnemonic = false;
             // 
-            // Form1
+            // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(700, 213);
-            this.Controls.Add(this.labelScreenShotState);
-            this.Controls.Add(buttonOpenScreenShotFolder);
-            this.Controls.Add(buttonScreenShot);
-            this.Controls.Add(tableLayoutPanel1);
-            this.Controls.Add(this.buttonResize);
-            this.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.Name = "Form1";
-            this.Text = "StarlightResize";
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            ClientSize = new System.Drawing.Size(700, 213);
+            Controls.Add(labelScreenShotState);
+            Controls.Add(buttonOpenScreenShotFolder);
+            Controls.Add(buttonScreenShot);
+            Controls.Add(tableLayoutPanel1);
+            Controls.Add(buttonResize);
+            Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            Name = "MainForm";
+            Text = "StarlightResize";
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             flowLayoutPanel1.ResumeLayout(false);
             flowLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHeight)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            ((System.ComponentModel.ISupportInitialize)numericUpDownWidth).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownHeight).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
