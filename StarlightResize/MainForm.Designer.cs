@@ -53,7 +53,7 @@ namespace StarlightResize
             comboBoxDisplay = new System.Windows.Forms.ComboBox();
             numericUpDownWidth = new System.Windows.Forms.NumericUpDown();
             numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
-            checkBoxSetResToDisplayAutomatically = new System.Windows.Forms.CheckBox();
+            checkBoxReverseAspectRatio = new System.Windows.Forms.CheckBox();
             buttonResize = new System.Windows.Forms.Button();
             labelScreenShotState = new System.Windows.Forms.Label();
             tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -93,7 +93,7 @@ namespace StarlightResize
             tableLayoutPanel1.Controls.Add(label6, 0, 3);
             tableLayoutPanel1.Controls.Add(label2, 0, 1);
             tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 1, 1);
-            tableLayoutPanel1.Controls.Add(checkBoxSetResToDisplayAutomatically, 1, 2);
+            tableLayoutPanel1.Controls.Add(checkBoxReverseAspectRatio, 1, 2);
             tableLayoutPanel1.Location = new System.Drawing.Point(11, 9);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 4;
@@ -101,7 +101,7 @@ namespace StarlightResize
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            tableLayoutPanel1.Size = new System.Drawing.Size(679, 135);
+            tableLayoutPanel1.Size = new System.Drawing.Size(679, 133);
             tableLayoutPanel1.TabIndex = 23;
             // 
             // tableLayoutPanel2
@@ -117,7 +117,7 @@ namespace StarlightResize
             tableLayoutPanel2.Controls.Add(radioButtonPosCenter, 1, 0);
             tableLayoutPanel2.Controls.Add(radioButtonPosRightBottom, 2, 1);
             tableLayoutPanel2.Controls.Add(radioButtonPosRightTop, 2, 0);
-            tableLayoutPanel2.Location = new System.Drawing.Point(68, 85);
+            tableLayoutPanel2.Location = new System.Drawing.Point(68, 83);
             tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 2;
@@ -193,7 +193,7 @@ namespace StarlightResize
             // 
             label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(3, 8);
+            label1.Location = new System.Drawing.Point(3, 7);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(62, 15);
             label1.TabIndex = 4;
@@ -203,7 +203,7 @@ namespace StarlightResize
             // 
             label6.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(31, 90);
+            label6.Location = new System.Drawing.Point(31, 88);
             label6.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(34, 15);
@@ -214,7 +214,7 @@ namespace StarlightResize
             // 
             label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(19, 38);
+            label2.Location = new System.Drawing.Point(19, 36);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(46, 15);
             label2.TabIndex = 5;
@@ -234,7 +234,7 @@ namespace StarlightResize
             flowLayoutPanel1.Controls.Add(buttonSetResTo3840);
             flowLayoutPanel1.Controls.Add(buttonSetResToDisplay);
             flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
-            flowLayoutPanel1.Location = new System.Drawing.Point(68, 31);
+            flowLayoutPanel1.Location = new System.Drawing.Point(68, 29);
             flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new System.Drawing.Size(611, 29);
@@ -261,6 +261,7 @@ namespace StarlightResize
             numericUpDownWidth.Size = new System.Drawing.Size(56, 23);
             numericUpDownWidth.TabIndex = 1;
             numericUpDownWidth.Value = new decimal(new int[] { 1280, 0, 0, 0 });
+            numericUpDownWidth.ValueChanged += numericUpDownWidth_ValueChanged;
             // 
             // label3
             // 
@@ -291,6 +292,7 @@ namespace StarlightResize
             numericUpDownHeight.Size = new System.Drawing.Size(56, 23);
             numericUpDownHeight.TabIndex = 2;
             numericUpDownHeight.Value = new decimal(new int[] { 720, 0, 0, 0 });
+            numericUpDownHeight.ValueChanged += numericUpDownHeight_ValueChanged;
             // 
             // buttonSetResTo1280
             // 
@@ -346,16 +348,16 @@ namespace StarlightResize
             buttonSetResToDisplay.UseVisualStyleBackColor = true;
             buttonSetResToDisplay.Click += buttonSetResToDisplay_Click;
             // 
-            // checkBoxSetResToDisplayAutomatically
+            // checkBoxReverseAspectRatio
             // 
-            checkBoxSetResToDisplayAutomatically.AutoSize = true;
-            checkBoxSetResToDisplayAutomatically.Enabled = false;
-            checkBoxSetResToDisplayAutomatically.Location = new System.Drawing.Point(71, 63);
-            checkBoxSetResToDisplayAutomatically.Name = "checkBoxSetResToDisplayAutomatically";
-            checkBoxSetResToDisplayAutomatically.Size = new System.Drawing.Size(287, 19);
-            checkBoxSetResToDisplayAutomatically.TabIndex = 12;
-            checkBoxSetResToDisplayAutomatically.Text = "ディスプレイ変更時に解像度を自動更新 (現在未実装)";
-            checkBoxSetResToDisplayAutomatically.UseVisualStyleBackColor = true;
+            checkBoxReverseAspectRatio.AutoSize = true;
+            checkBoxReverseAspectRatio.Location = new System.Drawing.Point(71, 61);
+            checkBoxReverseAspectRatio.Name = "checkBoxReverseAspectRatio";
+            checkBoxReverseAspectRatio.Size = new System.Drawing.Size(50, 19);
+            checkBoxReverseAspectRatio.TabIndex = 12;
+            checkBoxReverseAspectRatio.Text = "反転";
+            checkBoxReverseAspectRatio.UseVisualStyleBackColor = true;
+            checkBoxReverseAspectRatio.CheckStateChanged += checkBoxReverseAspectRatio_CheckStateChanged;
             // 
             // buttonScreenShot
             // 
@@ -434,7 +436,7 @@ namespace StarlightResize
         private System.Windows.Forms.ComboBox comboBoxDisplay;
         private System.Windows.Forms.NumericUpDown numericUpDownWidth;
         private System.Windows.Forms.NumericUpDown numericUpDownHeight;
-        private System.Windows.Forms.CheckBox checkBoxSetResToDisplayAutomatically;
+        private System.Windows.Forms.CheckBox checkBoxReverseAspectRatio;
         private System.Windows.Forms.Button buttonResize;
         private System.Windows.Forms.Label labelScreenShotState;
     }

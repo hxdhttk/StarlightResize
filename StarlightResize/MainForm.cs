@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -21,12 +20,19 @@ namespace StarlightResize
             ReloadDisplayList();
         }
 
+        private bool IsAspectRatioReversed => checkBoxReverseAspectRatio.Checked;
+
         private void ReloadDisplayList()
         {
             comboBoxDisplay.Items.Clear();
             foreach (var screen in Screen.AllScreens)
             {
                 comboBoxDisplay.Items.Add(screen);
+            }
+
+            if (comboBoxDisplay.Items.Count > 0)
+            {
+                comboBoxDisplay.SelectedItem = comboBoxDisplay.Items[0];
             }
         }
 
@@ -99,22 +105,50 @@ namespace StarlightResize
 
         private void buttonSetResTo1280_Click(object sender, EventArgs e)
         {
-            SetResolution(1280, 720);
+            if (IsAspectRatioReversed)
+            {
+                SetResolution(405, 720);
+            }
+            else
+            {
+                SetResolution(1280, 720);
+            }
         }
 
         private void buttonSetResTo1920_Click(object sender, EventArgs e)
         {
-            SetResolution(1920, 1080);
+            if (IsAspectRatioReversed)
+            {
+                SetResolution(608, 1080);
+            }
+            else
+            {
+                SetResolution(1920, 1080);
+            }
         }
 
         private void buttonSetResTo2560_Click(object sender, EventArgs e)
         {
-            SetResolution(2560, 1440);
+            if (IsAspectRatioReversed)
+            {
+                SetResolution(810, 1440);
+            }
+            else
+            {
+                SetResolution(2560, 1440);
+            }
         }
 
         private void buttonSetResTo3840_Click(object sender, EventArgs e)
         {
-            SetResolution(3840, 2160);
+            if (IsAspectRatioReversed)
+            {
+                SetResolution(1215, 2160);
+            }
+            else
+            {
+                SetResolution(3840, 2160);
+            }
         }
 
         private void buttonSetResToDisplay_Click(object sender, EventArgs e)
@@ -125,7 +159,15 @@ namespace StarlightResize
                 MessageBox.Show("ディスプレイが指定されていません。\n先にデレステを表示するディスプレイを選択してください", "StarlightResize", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            SetResolution(screen.Bounds.Width, screen.Bounds.Height);
+
+            if (IsAspectRatioReversed)
+            {
+                SetResolution((screen.Bounds.Height / 16) * 9, screen.Bounds.Height);
+            }
+            else
+            {
+                SetResolution(screen.Bounds.Width, (screen.Bounds.Width / 16) * 9);
+            }
         }
 
         private string getScreenshotFolder()
@@ -190,6 +232,45 @@ namespace StarlightResize
         private void buttonOpenScreenShotFolder_Click(object sender, EventArgs e)
         {
             Process.Start("explorer.exe", getScreenshotFolder());
+        }
+
+        private void numericUpDownWidth_ValueChanged(object sender, EventArgs e)
+        {
+            var currentValue = numericUpDownWidth.Value;
+
+            decimal heightValue;
+            if (IsAspectRatioReversed)
+            {
+                heightValue = (currentValue / 9) * 16;
+            }
+            else
+            {
+                heightValue = (currentValue / 16) * 9;
+            }
+
+            numericUpDownHeight.Value = heightValue;
+        }
+
+        private void numericUpDownHeight_ValueChanged(object sender, EventArgs e)
+        {
+            var currentValue = numericUpDownHeight.Value;
+
+            decimal widthValue;
+            if (IsAspectRatioReversed)
+            {
+                widthValue = (currentValue / 16) * 9;
+            }
+            else
+            {
+                widthValue = (currentValue / 9) * 16;
+            }
+
+            numericUpDownWidth.Value = widthValue;
+        }
+
+        private void checkBoxReverseAspectRatio_CheckStateChanged(object sender, EventArgs e)
+        {
+            buttonSetResToDisplay_Click(sender, e);
         }
     }
 }
