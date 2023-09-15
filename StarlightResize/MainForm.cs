@@ -33,6 +33,7 @@ namespace StarlightResize
             if (comboBoxDisplay.Items.Count > 0)
             {
                 comboBoxDisplay.SelectedItem = comboBoxDisplay.Items[0];
+                buttonSetResToDisplay_Click(this, default);
             }
         }
 
