@@ -20,6 +20,12 @@ namespace StarlightResize
             ReloadDisplayList();
         }
 
+        private string[] _targetProcesses =
+        {
+            "imascgstage",
+            "twinkle_starknightsX"
+        };
+
         private bool IsAspectRatioReversed => checkBoxReverseAspectRatio.Checked;
 
         private void ReloadDisplayList()
@@ -37,6 +43,11 @@ namespace StarlightResize
             }
         }
 
+        private Process GetTargetProcess()
+        {
+            return _targetProcesses.SelectMany(Process.GetProcessesByName).FirstOrDefault();
+        }
+
         private void buttonResize_Click(object sender, EventArgs e)
         {
             var screen = comboBoxDisplay.SelectedItem as Screen;
@@ -45,7 +56,7 @@ namespace StarlightResize
                 MessageBox.Show("ディスプレイが指定されていません。\n先にデレステを表示するディスプレイを選択してください。", "StarlightResize", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var process = Process.GetProcessesByName("imascgstage").FirstOrDefault();
+            var process = GetTargetProcess();
             if (process == null)
             {
                 MessageBox.Show("デレステのウィンドウが見つかりませんでした。\nデレステが起動していることを確認してください。", "StarlightResize", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -185,7 +196,7 @@ namespace StarlightResize
             // TODO: 保存先を変えられるようにする
             var starlightResizePicturesFolder = getScreenshotFolder();
 
-            var process = Process.GetProcessesByName("imascgstage").FirstOrDefault();
+            var process = GetTargetProcess();
             if (process == null)
             {
                 MessageBox.Show("デレステのウィンドウが見つかりませんでした。\nデレステが起動していることを確認してください。", "StarlightResize", MessageBoxButtons.OK, MessageBoxIcon.Error);
