@@ -83,7 +83,7 @@ jobs:
         Configuration: ${{ matrix.configuration }}
 
     - name: Publish the application
-      run: dotnet publish $env:Project_Path -configuration $env:Configuration
+      run: dotnet publish $env:Project_Path --configuration $env:Configuration
       env:
         Configuration: ${{ matrix.configuration }}
 
