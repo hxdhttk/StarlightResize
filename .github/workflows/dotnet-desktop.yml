@@ -101,4 +101,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Zip Package
-        path: ${{ env.Wap_Project_Directory }}\AppPackages
+        path: ${{ env.Artifacts_Path }}\StarlightResize.zip
