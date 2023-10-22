@@ -53,7 +53,7 @@ jobs:
       run: rm ${{ env.Artifacts_Path }}\*.pdb
 
     - name: Zip artifacts
-      run: Compress-Archive $env:Artifacts_Path\* -DestinationPath $env:Artifacts_Patt\StarlightResize.zip
+      run: Compress-Archive $env:Artifacts_Path\* -DestinationPath $env:Artifacts_Path\StarlightResize.zip
 
     # Upload the Zip package: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
