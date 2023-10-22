@@ -52,12 +52,9 @@ jobs:
     - name: Remove symbol files
       run: rm ${{ env.Artifacts_Path }}\*.pdb
 
-    - name: Zip artifacts
-      run: Compress-Archive $env:Artifacts_Path\* -DestinationPath $env:Artifacts_Path\StarlightResize.zip
-
     # Upload the Zip package: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Zip Package
-        path: ${{ env.Artifacts_Path }}\StarlightResize.zip
+        name: StarlightResize
+        path: ${{ env.Artifacts_Path }}
