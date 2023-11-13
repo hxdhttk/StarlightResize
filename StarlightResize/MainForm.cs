@@ -25,6 +25,15 @@ namespace StarlightResize
 
         private static readonly ProcessItem _reloadProcessListItem = new ProcessItem() { Text = "再読み込み...", ProcessId = -1 };
 
+        private RadioButton[] _radioButtonPosList => new RadioButton[]
+        {
+            radioButtonPosLeftTop,
+            radioButtonPosCenter,
+            radioButtonPosRightTop,
+            radioButtonPosLeftBottom,
+            radioButtonPosRightBottom
+        };
+
         private void ReloadDisplayList()
         {
             comboBoxDisplay.Items.Clear();
@@ -58,6 +67,18 @@ namespace StarlightResize
             if (processes.Any())
             {
                 comboBoxProcess.SelectedItem = comboBoxProcess.Items[0];
+            }
+        }
+
+        private void radionButtonPos_CheckedChanged(object sender, EventArgs e)
+        {
+            var radioButton = sender as RadioButton;
+            if (radioButton.Checked)
+            {
+                foreach (var item in _radioButtonPosList)
+                {
+                    item.Checked = item == radioButton;
+                }
             }
         }
 

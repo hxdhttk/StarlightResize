@@ -328,6 +328,7 @@ namespace StarlightResize
             radioButtonPosLeftTop.TabIndex = 14;
             radioButtonPosLeftTop.Text = "左上";
             radioButtonPosLeftTop.UseVisualStyleBackColor = true;
+            radioButtonPosLeftTop.CheckedChanged += radionButtonPos_CheckedChanged;
             // 
             // radioButtonPosLeftBottom
             // 
@@ -338,6 +339,7 @@ namespace StarlightResize
             radioButtonPosLeftBottom.TabIndex = 17;
             radioButtonPosLeftBottom.Text = "左下";
             radioButtonPosLeftBottom.UseVisualStyleBackColor = true;
+            radioButtonPosLeftBottom.CheckedChanged += radionButtonPos_CheckedChanged;
             // 
             // radioButtonPosCenter
             // 
@@ -352,6 +354,7 @@ namespace StarlightResize
             radioButtonPosCenter.TabStop = true;
             radioButtonPosCenter.Text = "中央";
             radioButtonPosCenter.UseVisualStyleBackColor = true;
+            radioButtonPosCenter.CheckedChanged += radionButtonPos_CheckedChanged;
             // 
             // radioButtonPosRightBottom
             // 
@@ -362,6 +365,7 @@ namespace StarlightResize
             radioButtonPosRightBottom.TabIndex = 18;
             radioButtonPosRightBottom.Text = "右下";
             radioButtonPosRightBottom.UseVisualStyleBackColor = true;
+            radioButtonPosRightBottom.CheckedChanged += radionButtonPos_CheckedChanged;
             // 
             // radioButtonPosRightTop
             // 
@@ -372,6 +376,7 @@ namespace StarlightResize
             radioButtonPosRightTop.TabIndex = 15;
             radioButtonPosRightTop.Text = "右上";
             radioButtonPosRightTop.UseVisualStyleBackColor = true;
+            radioButtonPosRightTop.CheckedChanged += radionButtonPos_CheckedChanged;
             // 
             // checkBoxReverseAspectRatio
             // 
