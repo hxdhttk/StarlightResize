@@ -29,156 +29,86 @@ namespace StarlightResize
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-            System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-            System.Windows.Forms.Label label1;
-            System.Windows.Forms.Label label6;
-            System.Windows.Forms.Label label2;
-            System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-            System.Windows.Forms.Label label4;
-            System.Windows.Forms.Label label3;
-            System.Windows.Forms.Label label5;
+            System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
+            System.Windows.Forms.Label labelDisplay;
+            System.Windows.Forms.Label labelPos;
+            System.Windows.Forms.Label labelRes;
+            System.Windows.Forms.FlowLayoutPanel flowLayoutPanelRes;
+            System.Windows.Forms.Label labelLength;
+            System.Windows.Forms.Label labelMul;
+            System.Windows.Forms.Label labelWidth;
             System.Windows.Forms.Button buttonSetResTo1280;
             System.Windows.Forms.Button buttonSetResTo1920;
             System.Windows.Forms.Button buttonSetResTo2560;
             System.Windows.Forms.Button buttonSetResTo3840;
             System.Windows.Forms.Button buttonSetResToDisplay;
+            System.Windows.Forms.TableLayoutPanel tableLayoutPanelPos;
             System.Windows.Forms.Button buttonScreenShot;
             System.Windows.Forms.Button buttonOpenScreenShotFolder;
+            comboBoxDisplay = new System.Windows.Forms.ComboBox();
+            numericUpDownWidth = new System.Windows.Forms.NumericUpDown();
+            numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
+            labelProcess = new System.Windows.Forms.Label();
+            comboBoxProcess = new System.Windows.Forms.ComboBox();
             radioButtonPosLeftTop = new System.Windows.Forms.RadioButton();
             radioButtonPosLeftBottom = new System.Windows.Forms.RadioButton();
             radioButtonPosCenter = new System.Windows.Forms.RadioButton();
             radioButtonPosRightBottom = new System.Windows.Forms.RadioButton();
             radioButtonPosRightTop = new System.Windows.Forms.RadioButton();
-            comboBoxDisplay = new System.Windows.Forms.ComboBox();
-            numericUpDownWidth = new System.Windows.Forms.NumericUpDown();
-            numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
             checkBoxReverseAspectRatio = new System.Windows.Forms.CheckBox();
             buttonResize = new System.Windows.Forms.Button();
             labelScreenShotState = new System.Windows.Forms.Label();
-            tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            label1 = new System.Windows.Forms.Label();
-            label6 = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
-            flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            label4 = new System.Windows.Forms.Label();
-            label3 = new System.Windows.Forms.Label();
-            label5 = new System.Windows.Forms.Label();
+            tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
+            labelDisplay = new System.Windows.Forms.Label();
+            labelPos = new System.Windows.Forms.Label();
+            labelRes = new System.Windows.Forms.Label();
+            flowLayoutPanelRes = new System.Windows.Forms.FlowLayoutPanel();
+            labelLength = new System.Windows.Forms.Label();
+            labelMul = new System.Windows.Forms.Label();
+            labelWidth = new System.Windows.Forms.Label();
             buttonSetResTo1280 = new System.Windows.Forms.Button();
             buttonSetResTo1920 = new System.Windows.Forms.Button();
             buttonSetResTo2560 = new System.Windows.Forms.Button();
             buttonSetResTo3840 = new System.Windows.Forms.Button();
             buttonSetResToDisplay = new System.Windows.Forms.Button();
+            tableLayoutPanelPos = new System.Windows.Forms.TableLayoutPanel();
             buttonScreenShot = new System.Windows.Forms.Button();
             buttonOpenScreenShotFolder = new System.Windows.Forms.Button();
-            tableLayoutPanel1.SuspendLayout();
-            tableLayoutPanel2.SuspendLayout();
-            flowLayoutPanel1.SuspendLayout();
+            tableLayoutPanelMain.SuspendLayout();
+            flowLayoutPanelRes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownWidth).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownHeight).BeginInit();
+            tableLayoutPanelPos.SuspendLayout();
             SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // tableLayoutPanelMain
             // 
-            tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            tableLayoutPanel1.AutoSize = true;
-            tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 3);
-            tableLayoutPanel1.Controls.Add(comboBoxDisplay, 1, 0);
-            tableLayoutPanel1.Controls.Add(label1, 0, 0);
-            tableLayoutPanel1.Controls.Add(label6, 0, 3);
-            tableLayoutPanel1.Controls.Add(label2, 0, 1);
-            tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 1, 1);
-            tableLayoutPanel1.Controls.Add(checkBoxReverseAspectRatio, 1, 2);
-            tableLayoutPanel1.Location = new System.Drawing.Point(11, 9);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            tableLayoutPanel1.Size = new System.Drawing.Size(679, 133);
-            tableLayoutPanel1.TabIndex = 23;
-            // 
-            // tableLayoutPanel2
-            // 
-            tableLayoutPanel2.AutoSize = true;
-            tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            tableLayoutPanel2.ColumnCount = 3;
-            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            tableLayoutPanel2.Controls.Add(radioButtonPosLeftTop, 0, 0);
-            tableLayoutPanel2.Controls.Add(radioButtonPosLeftBottom, 0, 1);
-            tableLayoutPanel2.Controls.Add(radioButtonPosCenter, 1, 0);
-            tableLayoutPanel2.Controls.Add(radioButtonPosRightBottom, 2, 1);
-            tableLayoutPanel2.Controls.Add(radioButtonPosRightTop, 2, 0);
-            tableLayoutPanel2.Location = new System.Drawing.Point(68, 83);
-            tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
-            tableLayoutPanel2.Name = "tableLayoutPanel2";
-            tableLayoutPanel2.RowCount = 2;
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            tableLayoutPanel2.Size = new System.Drawing.Size(165, 50);
-            tableLayoutPanel2.TabIndex = 22;
-            // 
-            // radioButtonPosLeftTop
-            // 
-            radioButtonPosLeftTop.AutoSize = true;
-            radioButtonPosLeftTop.Location = new System.Drawing.Point(3, 3);
-            radioButtonPosLeftTop.Name = "radioButtonPosLeftTop";
-            radioButtonPosLeftTop.Size = new System.Drawing.Size(49, 19);
-            radioButtonPosLeftTop.TabIndex = 14;
-            radioButtonPosLeftTop.Text = "左上";
-            radioButtonPosLeftTop.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonPosLeftBottom
-            // 
-            radioButtonPosLeftBottom.AutoSize = true;
-            radioButtonPosLeftBottom.Location = new System.Drawing.Point(3, 28);
-            radioButtonPosLeftBottom.Name = "radioButtonPosLeftBottom";
-            radioButtonPosLeftBottom.Size = new System.Drawing.Size(49, 19);
-            radioButtonPosLeftBottom.TabIndex = 17;
-            radioButtonPosLeftBottom.Text = "左下";
-            radioButtonPosLeftBottom.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonPosCenter
-            // 
-            radioButtonPosCenter.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            radioButtonPosCenter.AutoSize = true;
-            radioButtonPosCenter.Checked = true;
-            radioButtonPosCenter.Location = new System.Drawing.Point(58, 15);
-            radioButtonPosCenter.Name = "radioButtonPosCenter";
-            tableLayoutPanel2.SetRowSpan(radioButtonPosCenter, 2);
-            radioButtonPosCenter.Size = new System.Drawing.Size(49, 19);
-            radioButtonPosCenter.TabIndex = 16;
-            radioButtonPosCenter.TabStop = true;
-            radioButtonPosCenter.Text = "中央";
-            radioButtonPosCenter.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonPosRightBottom
-            // 
-            radioButtonPosRightBottom.AutoSize = true;
-            radioButtonPosRightBottom.Location = new System.Drawing.Point(113, 28);
-            radioButtonPosRightBottom.Name = "radioButtonPosRightBottom";
-            radioButtonPosRightBottom.Size = new System.Drawing.Size(49, 19);
-            radioButtonPosRightBottom.TabIndex = 18;
-            radioButtonPosRightBottom.Text = "右下";
-            radioButtonPosRightBottom.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonPosRightTop
-            // 
-            radioButtonPosRightTop.AutoSize = true;
-            radioButtonPosRightTop.Location = new System.Drawing.Point(113, 3);
-            radioButtonPosRightTop.Name = "radioButtonPosRightTop";
-            radioButtonPosRightTop.Size = new System.Drawing.Size(49, 19);
-            radioButtonPosRightTop.TabIndex = 15;
-            radioButtonPosRightTop.Text = "右上";
-            radioButtonPosRightTop.UseVisualStyleBackColor = true;
+            tableLayoutPanelMain.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            tableLayoutPanelMain.AutoSize = true;
+            tableLayoutPanelMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            tableLayoutPanelMain.ColumnCount = 2;
+            tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            tableLayoutPanelMain.Controls.Add(comboBoxDisplay, 1, 0);
+            tableLayoutPanelMain.Controls.Add(labelDisplay, 0, 0);
+            tableLayoutPanelMain.Controls.Add(labelPos, 0, 4);
+            tableLayoutPanelMain.Controls.Add(labelRes, 0, 2);
+            tableLayoutPanelMain.Controls.Add(flowLayoutPanelRes, 1, 2);
+            tableLayoutPanelMain.Controls.Add(labelProcess, 0, 1);
+            tableLayoutPanelMain.Controls.Add(comboBoxProcess, 1, 1);
+            tableLayoutPanelMain.Controls.Add(tableLayoutPanelPos, 0, 4);
+            tableLayoutPanelMain.Controls.Add(checkBoxReverseAspectRatio, 1, 3);
+            tableLayoutPanelMain.Location = new System.Drawing.Point(11, 9);
+            tableLayoutPanelMain.Name = "tableLayoutPanelMain";
+            tableLayoutPanelMain.RowCount = 5;
+            tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            tableLayoutPanelMain.Size = new System.Drawing.Size(679, 162);
+            tableLayoutPanelMain.TabIndex = 23;
             // 
             // comboBoxDisplay
             // 
@@ -189,68 +119,68 @@ namespace StarlightResize
             comboBoxDisplay.Size = new System.Drawing.Size(605, 23);
             comboBoxDisplay.TabIndex = 3;
             // 
-            // label1
+            // labelDisplay
             // 
-            label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(3, 7);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(62, 15);
-            label1.TabIndex = 4;
-            label1.Text = "ディスプレイ:";
+            labelDisplay.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelDisplay.AutoSize = true;
+            labelDisplay.Location = new System.Drawing.Point(3, 7);
+            labelDisplay.Name = "labelDisplay";
+            labelDisplay.Size = new System.Drawing.Size(62, 15);
+            labelDisplay.TabIndex = 4;
+            labelDisplay.Text = "ディスプレイ:";
             // 
-            // label6
+            // labelPos
             // 
-            label6.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(31, 88);
-            label6.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(34, 15);
-            label6.TabIndex = 13;
-            label6.Text = "位置:";
+            labelPos.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelPos.AutoSize = true;
+            labelPos.Location = new System.Drawing.Point(31, 132);
+            labelPos.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
+            labelPos.Name = "labelPos";
+            labelPos.Size = new System.Drawing.Size(34, 15);
+            labelPos.TabIndex = 13;
+            labelPos.Text = "位置:";
             // 
-            // label2
+            // labelRes
             // 
-            label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(19, 36);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(46, 15);
-            label2.TabIndex = 5;
-            label2.Text = "解像度:";
+            labelRes.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelRes.AutoSize = true;
+            labelRes.Location = new System.Drawing.Point(19, 65);
+            labelRes.Name = "labelRes";
+            labelRes.Size = new System.Drawing.Size(46, 15);
+            labelRes.TabIndex = 5;
+            labelRes.Text = "解像度:";
             // 
-            // flowLayoutPanel1
+            // flowLayoutPanelRes
             // 
-            flowLayoutPanel1.AutoSize = true;
-            flowLayoutPanel1.Controls.Add(label4);
-            flowLayoutPanel1.Controls.Add(numericUpDownWidth);
-            flowLayoutPanel1.Controls.Add(label3);
-            flowLayoutPanel1.Controls.Add(label5);
-            flowLayoutPanel1.Controls.Add(numericUpDownHeight);
-            flowLayoutPanel1.Controls.Add(buttonSetResTo1280);
-            flowLayoutPanel1.Controls.Add(buttonSetResTo1920);
-            flowLayoutPanel1.Controls.Add(buttonSetResTo2560);
-            flowLayoutPanel1.Controls.Add(buttonSetResTo3840);
-            flowLayoutPanel1.Controls.Add(buttonSetResToDisplay);
-            flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left;
-            flowLayoutPanel1.Location = new System.Drawing.Point(68, 29);
-            flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new System.Drawing.Size(611, 29);
-            flowLayoutPanel1.TabIndex = 6;
-            flowLayoutPanel1.WrapContents = false;
+            flowLayoutPanelRes.AutoSize = true;
+            flowLayoutPanelRes.Controls.Add(labelLength);
+            flowLayoutPanelRes.Controls.Add(numericUpDownWidth);
+            flowLayoutPanelRes.Controls.Add(labelMul);
+            flowLayoutPanelRes.Controls.Add(labelWidth);
+            flowLayoutPanelRes.Controls.Add(numericUpDownHeight);
+            flowLayoutPanelRes.Controls.Add(buttonSetResTo1280);
+            flowLayoutPanelRes.Controls.Add(buttonSetResTo1920);
+            flowLayoutPanelRes.Controls.Add(buttonSetResTo2560);
+            flowLayoutPanelRes.Controls.Add(buttonSetResTo3840);
+            flowLayoutPanelRes.Controls.Add(buttonSetResToDisplay);
+            flowLayoutPanelRes.Dock = System.Windows.Forms.DockStyle.Left;
+            flowLayoutPanelRes.Location = new System.Drawing.Point(68, 58);
+            flowLayoutPanelRes.Margin = new System.Windows.Forms.Padding(0);
+            flowLayoutPanelRes.Name = "flowLayoutPanelRes";
+            flowLayoutPanelRes.Size = new System.Drawing.Size(611, 29);
+            flowLayoutPanelRes.TabIndex = 6;
+            flowLayoutPanelRes.WrapContents = false;
             // 
-            // label4
+            // labelLength
             // 
-            label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(0, 7);
-            label4.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(31, 15);
-            label4.TabIndex = 7;
-            label4.Text = "長辺";
+            labelLength.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            labelLength.AutoSize = true;
+            labelLength.Location = new System.Drawing.Point(0, 7);
+            labelLength.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            labelLength.Name = "labelLength";
+            labelLength.Size = new System.Drawing.Size(31, 15);
+            labelLength.TabIndex = 7;
+            labelLength.Text = "長辺";
             // 
             // numericUpDownWidth
             // 
@@ -263,25 +193,25 @@ namespace StarlightResize
             numericUpDownWidth.Value = new decimal(new int[] { 1280, 0, 0, 0 });
             numericUpDownWidth.ValueChanged += numericUpDownWidth_ValueChanged;
             // 
-            // label3
+            // labelMul
             // 
-            label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(99, 7);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(13, 15);
-            label3.TabIndex = 6;
-            label3.Text = "x";
+            labelMul.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            labelMul.AutoSize = true;
+            labelMul.Location = new System.Drawing.Point(99, 7);
+            labelMul.Name = "labelMul";
+            labelMul.Size = new System.Drawing.Size(13, 15);
+            labelMul.TabIndex = 6;
+            labelMul.Text = "x";
             // 
-            // label5
+            // labelWidth
             // 
-            label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(118, 7);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(31, 15);
-            label5.TabIndex = 8;
-            label5.Text = "短辺";
+            labelWidth.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            labelWidth.AutoSize = true;
+            labelWidth.Location = new System.Drawing.Point(118, 7);
+            labelWidth.Name = "labelWidth";
+            labelWidth.Size = new System.Drawing.Size(31, 15);
+            labelWidth.TabIndex = 8;
+            labelWidth.Text = "短辺";
             // 
             // numericUpDownHeight
             // 
@@ -348,10 +278,105 @@ namespace StarlightResize
             buttonSetResToDisplay.UseVisualStyleBackColor = true;
             buttonSetResToDisplay.Click += buttonSetResToDisplay_Click;
             // 
+            // labelProcess
+            // 
+            labelProcess.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            labelProcess.AutoSize = true;
+            labelProcess.Location = new System.Drawing.Point(18, 36);
+            labelProcess.Name = "labelProcess";
+            labelProcess.Size = new System.Drawing.Size(47, 15);
+            labelProcess.TabIndex = 23;
+            labelProcess.Text = "プロセス:";
+            // 
+            // comboBoxProcess
+            // 
+            comboBoxProcess.FormattingEnabled = true;
+            comboBoxProcess.Location = new System.Drawing.Point(71, 32);
+            comboBoxProcess.Name = "comboBoxProcess";
+            comboBoxProcess.Size = new System.Drawing.Size(605, 23);
+            comboBoxProcess.TabIndex = 24;
+            comboBoxProcess.SelectedIndexChanged += comboBoxProcess_SelectedIndexChanged;
+            // 
+            // tableLayoutPanelPos
+            // 
+            tableLayoutPanelPos.AutoSize = true;
+            tableLayoutPanelPos.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            tableLayoutPanelPos.ColumnCount = 3;
+            tableLayoutPanelPos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            tableLayoutPanelPos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            tableLayoutPanelPos.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            tableLayoutPanelPos.Controls.Add(radioButtonPosLeftTop, 0, 0);
+            tableLayoutPanelPos.Controls.Add(radioButtonPosLeftBottom, 0, 1);
+            tableLayoutPanelPos.Controls.Add(radioButtonPosCenter, 1, 0);
+            tableLayoutPanelPos.Controls.Add(radioButtonPosRightBottom, 2, 1);
+            tableLayoutPanelPos.Controls.Add(radioButtonPosRightTop, 2, 0);
+            tableLayoutPanelPos.Location = new System.Drawing.Point(68, 112);
+            tableLayoutPanelPos.Margin = new System.Windows.Forms.Padding(0);
+            tableLayoutPanelPos.Name = "tableLayoutPanelPos";
+            tableLayoutPanelPos.RowCount = 2;
+            tableLayoutPanelPos.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            tableLayoutPanelPos.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            tableLayoutPanelPos.Size = new System.Drawing.Size(165, 50);
+            tableLayoutPanelPos.TabIndex = 22;
+            // 
+            // radioButtonPosLeftTop
+            // 
+            radioButtonPosLeftTop.AutoSize = true;
+            radioButtonPosLeftTop.Location = new System.Drawing.Point(3, 3);
+            radioButtonPosLeftTop.Name = "radioButtonPosLeftTop";
+            radioButtonPosLeftTop.Size = new System.Drawing.Size(49, 19);
+            radioButtonPosLeftTop.TabIndex = 14;
+            radioButtonPosLeftTop.Text = "左上";
+            radioButtonPosLeftTop.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonPosLeftBottom
+            // 
+            radioButtonPosLeftBottom.AutoSize = true;
+            radioButtonPosLeftBottom.Location = new System.Drawing.Point(3, 28);
+            radioButtonPosLeftBottom.Name = "radioButtonPosLeftBottom";
+            radioButtonPosLeftBottom.Size = new System.Drawing.Size(49, 19);
+            radioButtonPosLeftBottom.TabIndex = 17;
+            radioButtonPosLeftBottom.Text = "左下";
+            radioButtonPosLeftBottom.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonPosCenter
+            // 
+            radioButtonPosCenter.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            radioButtonPosCenter.AutoSize = true;
+            radioButtonPosCenter.Checked = true;
+            radioButtonPosCenter.Location = new System.Drawing.Point(58, 15);
+            radioButtonPosCenter.Name = "radioButtonPosCenter";
+            tableLayoutPanelPos.SetRowSpan(radioButtonPosCenter, 2);
+            radioButtonPosCenter.Size = new System.Drawing.Size(49, 19);
+            radioButtonPosCenter.TabIndex = 16;
+            radioButtonPosCenter.TabStop = true;
+            radioButtonPosCenter.Text = "中央";
+            radioButtonPosCenter.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonPosRightBottom
+            // 
+            radioButtonPosRightBottom.AutoSize = true;
+            radioButtonPosRightBottom.Location = new System.Drawing.Point(113, 28);
+            radioButtonPosRightBottom.Name = "radioButtonPosRightBottom";
+            radioButtonPosRightBottom.Size = new System.Drawing.Size(49, 19);
+            radioButtonPosRightBottom.TabIndex = 18;
+            radioButtonPosRightBottom.Text = "右下";
+            radioButtonPosRightBottom.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonPosRightTop
+            // 
+            radioButtonPosRightTop.AutoSize = true;
+            radioButtonPosRightTop.Location = new System.Drawing.Point(113, 3);
+            radioButtonPosRightTop.Name = "radioButtonPosRightTop";
+            radioButtonPosRightTop.Size = new System.Drawing.Size(49, 19);
+            radioButtonPosRightTop.TabIndex = 15;
+            radioButtonPosRightTop.Text = "右上";
+            radioButtonPosRightTop.UseVisualStyleBackColor = true;
+            // 
             // checkBoxReverseAspectRatio
             // 
             checkBoxReverseAspectRatio.AutoSize = true;
-            checkBoxReverseAspectRatio.Location = new System.Drawing.Point(71, 61);
+            checkBoxReverseAspectRatio.Location = new System.Drawing.Point(71, 90);
             checkBoxReverseAspectRatio.Name = "checkBoxReverseAspectRatio";
             checkBoxReverseAspectRatio.Size = new System.Drawing.Size(50, 19);
             checkBoxReverseAspectRatio.TabIndex = 12;
@@ -361,7 +386,7 @@ namespace StarlightResize
             // 
             // buttonScreenShot
             // 
-            buttonScreenShot.Location = new System.Drawing.Point(11, 178);
+            buttonScreenShot.Location = new System.Drawing.Point(11, 206);
             buttonScreenShot.Name = "buttonScreenShot";
             buttonScreenShot.Size = new System.Drawing.Size(99, 23);
             buttonScreenShot.TabIndex = 24;
@@ -371,7 +396,7 @@ namespace StarlightResize
             // 
             // buttonOpenScreenShotFolder
             // 
-            buttonOpenScreenShotFolder.Location = new System.Drawing.Point(569, 178);
+            buttonOpenScreenShotFolder.Location = new System.Drawing.Point(569, 206);
             buttonOpenScreenShotFolder.Name = "buttonOpenScreenShotFolder";
             buttonOpenScreenShotFolder.Size = new System.Drawing.Size(118, 23);
             buttonOpenScreenShotFolder.TabIndex = 25;
@@ -381,7 +406,7 @@ namespace StarlightResize
             // 
             // buttonResize
             // 
-            buttonResize.Location = new System.Drawing.Point(11, 148);
+            buttonResize.Location = new System.Drawing.Point(11, 176);
             buttonResize.Name = "buttonResize";
             buttonResize.Size = new System.Drawing.Size(75, 23);
             buttonResize.TabIndex = 22;
@@ -392,7 +417,7 @@ namespace StarlightResize
             // labelScreenShotState
             // 
             labelScreenShotState.AutoSize = true;
-            labelScreenShotState.Location = new System.Drawing.Point(116, 182);
+            labelScreenShotState.Location = new System.Drawing.Point(116, 210);
             labelScreenShotState.Name = "labelScreenShotState";
             labelScreenShotState.Size = new System.Drawing.Size(55, 15);
             labelScreenShotState.TabIndex = 26;
@@ -403,25 +428,25 @@ namespace StarlightResize
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            ClientSize = new System.Drawing.Size(700, 213);
+            ClientSize = new System.Drawing.Size(700, 239);
             Controls.Add(labelScreenShotState);
             Controls.Add(buttonOpenScreenShotFolder);
             Controls.Add(buttonScreenShot);
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(tableLayoutPanelMain);
             Controls.Add(buttonResize);
             Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "MainForm";
             Text = "StarlightResize";
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
-            tableLayoutPanel2.ResumeLayout(false);
-            tableLayoutPanel2.PerformLayout();
-            flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.PerformLayout();
+            tableLayoutPanelMain.ResumeLayout(false);
+            tableLayoutPanelMain.PerformLayout();
+            flowLayoutPanelRes.ResumeLayout(false);
+            flowLayoutPanelRes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownWidth).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownHeight).EndInit();
+            tableLayoutPanelPos.ResumeLayout(false);
+            tableLayoutPanelPos.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -439,6 +464,8 @@ namespace StarlightResize
         private System.Windows.Forms.CheckBox checkBoxReverseAspectRatio;
         private System.Windows.Forms.Button buttonResize;
         private System.Windows.Forms.Label labelScreenShotState;
+        private System.Windows.Forms.Label labelProcess;
+        private System.Windows.Forms.ComboBox comboBoxProcess;
     }
 }
 
