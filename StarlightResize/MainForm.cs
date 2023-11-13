@@ -23,7 +23,7 @@ namespace StarlightResize
 
         private bool IsAspectRatioReversed => checkBoxReverseAspectRatio.Checked;
 
-        private static readonly ProcessItem _reloadProcessListItem = new ProcessItem() { Text = "再読み込み...", Value = -1 };
+        private static readonly ProcessItem _reloadProcessListItem = new ProcessItem() { Text = "再読み込み...", ProcessId = -1 };
 
         private void ReloadDisplayList()
         {
@@ -42,34 +42,34 @@ namespace StarlightResize
 
         private void ReloadProcessList()
         {
-            comboBoxProcess.DataSource = null;
+            comboBoxProcess.Items.Clear();
 
             var processes = Process.GetProcesses()
+                .Where(p => p.Id != Process.GetCurrentProcess().Id)
                 .Where(p => !string.IsNullOrEmpty(p.MainWindowTitle))
-                .Select(p => new ProcessItem() { Text = $"{p.ProcessName} | {p.MainWindowTitle}", Value = p.Id });
+                .Select(p => new ProcessItem() { Text = $"{p.ProcessName} | {p.MainWindowTitle}", ProcessId = p.Id });
 
-            var dataSource = processes.ToList();
-            dataSource.Add(_reloadProcessListItem);
-
-            comboBoxProcess.DisplayMember = nameof(ProcessItem.Text);
-            comboBoxProcess.ValueMember = nameof(ProcessItem.Value);
-            comboBoxProcess.DataSource = dataSource;
-
-            if (dataSource.Any())
+            foreach (var process in processes)
             {
-                comboBoxProcess.SelectedIndex = 0;
+                comboBoxProcess.Items.Add(process);
+            }
+            comboBoxProcess.Items.Add(_reloadProcessListItem);
+
+            if (processes.Any())
+            {
+                comboBoxProcess.SelectedItem = comboBoxProcess.Items[0];
             }
         }
 
         private Process GetTargetProcess()
         {
-            var targetProcessId = (int)comboBoxProcess.SelectedValue;
+            var targetProcessId = (comboBoxProcess.SelectedItem as ProcessItem).ProcessId;
             return Process.GetProcessById(targetProcessId);
         }
 
         private void comboBoxProcess_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxProcess.SelectedValue is null)
+            if (comboBoxProcess.SelectedItem is null)
             {
                 return;
             }
@@ -318,7 +318,12 @@ namespace StarlightResize
         {
             public string Text { get; init; }
 
-            public int Value { get; init; }
+            public int ProcessId { get; init; }
+
+            public override string ToString()
+            {
+                return Text;
+            }
         }
     }
 }
