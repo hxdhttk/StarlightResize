@@ -85,7 +85,18 @@ namespace StarlightResize
         private Process GetTargetProcess()
         {
             var targetProcessId = (comboBoxProcess.SelectedItem as ProcessItem).ProcessId;
-            return Process.GetProcessById(targetProcessId);
+
+            Process targetProcess = null;
+            try
+            {
+                targetProcess = Process.GetProcessById(targetProcessId);
+            }
+            catch
+            {
+                // Ignore all exceptions
+            }
+
+            return targetProcess;
         }
 
         private void comboBoxProcess_SelectedIndexChanged(object sender, EventArgs e)
