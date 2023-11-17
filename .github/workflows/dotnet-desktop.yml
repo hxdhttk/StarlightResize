@@ -49,12 +49,9 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
-    - name: Remove symbol files
-      run: rm ${{ env.Artifacts_Path }}\*.pdb
-
     # Upload the Zip package: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: StarlightResize
-        path: ${{ env.Artifacts_Path }}
+        path: ${{ env.Artifacts_Path }}\StarlightResize.exe
