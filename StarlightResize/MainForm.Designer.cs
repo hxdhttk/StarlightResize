@@ -42,6 +42,7 @@ namespace StarlightResize
             System.Windows.Forms.Button buttonSetResTo2560;
             System.Windows.Forms.Button buttonSetResTo3840;
             System.Windows.Forms.Button buttonSetResToDisplay;
+            System.Windows.Forms.FlowLayoutPanel flowLayoutPanelProcess;
             System.Windows.Forms.TableLayoutPanel tableLayoutPanelPos;
             System.Windows.Forms.Button buttonScreenShot;
             System.Windows.Forms.Button buttonOpenScreenShotFolder;
@@ -50,6 +51,7 @@ namespace StarlightResize
             numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
             labelProcess = new System.Windows.Forms.Label();
             comboBoxProcess = new System.Windows.Forms.ComboBox();
+            buttonRefresh = new System.Windows.Forms.Button();
             radioButtonPosLeftTop = new System.Windows.Forms.RadioButton();
             radioButtonPosLeftBottom = new System.Windows.Forms.RadioButton();
             radioButtonPosCenter = new System.Windows.Forms.RadioButton();
@@ -71,6 +73,7 @@ namespace StarlightResize
             buttonSetResTo2560 = new System.Windows.Forms.Button();
             buttonSetResTo3840 = new System.Windows.Forms.Button();
             buttonSetResToDisplay = new System.Windows.Forms.Button();
+            flowLayoutPanelProcess = new System.Windows.Forms.FlowLayoutPanel();
             tableLayoutPanelPos = new System.Windows.Forms.TableLayoutPanel();
             buttonScreenShot = new System.Windows.Forms.Button();
             buttonOpenScreenShotFolder = new System.Windows.Forms.Button();
@@ -78,6 +81,7 @@ namespace StarlightResize
             flowLayoutPanelRes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownWidth).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownHeight).BeginInit();
+            flowLayoutPanelProcess.SuspendLayout();
             tableLayoutPanelPos.SuspendLayout();
             SuspendLayout();
             // 
@@ -95,7 +99,7 @@ namespace StarlightResize
             tableLayoutPanelMain.Controls.Add(labelRes, 0, 2);
             tableLayoutPanelMain.Controls.Add(flowLayoutPanelRes, 1, 2);
             tableLayoutPanelMain.Controls.Add(labelProcess, 0, 1);
-            tableLayoutPanelMain.Controls.Add(comboBoxProcess, 1, 1);
+            tableLayoutPanelMain.Controls.Add(flowLayoutPanelProcess, 1, 1);
             tableLayoutPanelMain.Controls.Add(tableLayoutPanelPos, 0, 4);
             tableLayoutPanelMain.Controls.Add(checkBoxReverseAspectRatio, 1, 3);
             tableLayoutPanelMain.Location = new System.Drawing.Point(11, 9);
@@ -107,7 +111,7 @@ namespace StarlightResize
             tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanelMain.Size = new System.Drawing.Size(679, 162);
+            tableLayoutPanelMain.Size = new System.Drawing.Size(682, 168);
             tableLayoutPanelMain.TabIndex = 23;
             // 
             // comboBoxDisplay
@@ -133,7 +137,7 @@ namespace StarlightResize
             // 
             labelPos.Anchor = System.Windows.Forms.AnchorStyles.Right;
             labelPos.AutoSize = true;
-            labelPos.Location = new System.Drawing.Point(31, 132);
+            labelPos.Location = new System.Drawing.Point(31, 138);
             labelPos.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             labelPos.Name = "labelPos";
             labelPos.Size = new System.Drawing.Size(34, 15);
@@ -144,7 +148,7 @@ namespace StarlightResize
             // 
             labelRes.Anchor = System.Windows.Forms.AnchorStyles.Right;
             labelRes.AutoSize = true;
-            labelRes.Location = new System.Drawing.Point(19, 65);
+            labelRes.Location = new System.Drawing.Point(19, 71);
             labelRes.Name = "labelRes";
             labelRes.Size = new System.Drawing.Size(46, 15);
             labelRes.TabIndex = 5;
@@ -164,7 +168,7 @@ namespace StarlightResize
             flowLayoutPanelRes.Controls.Add(buttonSetResTo3840);
             flowLayoutPanelRes.Controls.Add(buttonSetResToDisplay);
             flowLayoutPanelRes.Dock = System.Windows.Forms.DockStyle.Left;
-            flowLayoutPanelRes.Location = new System.Drawing.Point(68, 58);
+            flowLayoutPanelRes.Location = new System.Drawing.Point(68, 64);
             flowLayoutPanelRes.Margin = new System.Windows.Forms.Padding(0);
             flowLayoutPanelRes.Name = "flowLayoutPanelRes";
             flowLayoutPanelRes.Size = new System.Drawing.Size(611, 29);
@@ -282,20 +286,40 @@ namespace StarlightResize
             // 
             labelProcess.Anchor = System.Windows.Forms.AnchorStyles.Right;
             labelProcess.AutoSize = true;
-            labelProcess.Location = new System.Drawing.Point(18, 36);
+            labelProcess.Location = new System.Drawing.Point(18, 39);
             labelProcess.Name = "labelProcess";
             labelProcess.Size = new System.Drawing.Size(47, 15);
             labelProcess.TabIndex = 23;
             labelProcess.Text = "プロセス:";
             // 
+            // flowLayoutPanelProcess
+            // 
+            flowLayoutPanelProcess.AutoSize = true;
+            flowLayoutPanelProcess.Controls.Add(comboBoxProcess);
+            flowLayoutPanelProcess.Controls.Add(buttonRefresh);
+            flowLayoutPanelProcess.Dock = System.Windows.Forms.DockStyle.Left;
+            flowLayoutPanelProcess.Location = new System.Drawing.Point(71, 32);
+            flowLayoutPanelProcess.Name = "flowLayoutPanelProcess";
+            flowLayoutPanelProcess.Size = new System.Drawing.Size(608, 29);
+            flowLayoutPanelProcess.TabIndex = 27;
+            // 
             // comboBoxProcess
             // 
             comboBoxProcess.FormattingEnabled = true;
-            comboBoxProcess.Location = new System.Drawing.Point(71, 32);
+            comboBoxProcess.Location = new System.Drawing.Point(3, 3);
             comboBoxProcess.Name = "comboBoxProcess";
-            comboBoxProcess.Size = new System.Drawing.Size(605, 23);
+            comboBoxProcess.Size = new System.Drawing.Size(521, 23);
             comboBoxProcess.TabIndex = 24;
-            comboBoxProcess.SelectedIndexChanged += comboBoxProcess_SelectedIndexChanged;
+            // 
+            // buttonRefresh
+            // 
+            buttonRefresh.Location = new System.Drawing.Point(530, 3);
+            buttonRefresh.Name = "buttonRefresh";
+            buttonRefresh.Size = new System.Drawing.Size(75, 23);
+            buttonRefresh.TabIndex = 25;
+            buttonRefresh.Text = "再読み込み";
+            buttonRefresh.UseVisualStyleBackColor = true;
+            buttonRefresh.Click += buttonRefresh_Click;
             // 
             // tableLayoutPanelPos
             // 
@@ -310,7 +334,7 @@ namespace StarlightResize
             tableLayoutPanelPos.Controls.Add(radioButtonPosCenter, 1, 0);
             tableLayoutPanelPos.Controls.Add(radioButtonPosRightBottom, 2, 1);
             tableLayoutPanelPos.Controls.Add(radioButtonPosRightTop, 2, 0);
-            tableLayoutPanelPos.Location = new System.Drawing.Point(68, 112);
+            tableLayoutPanelPos.Location = new System.Drawing.Point(68, 118);
             tableLayoutPanelPos.Margin = new System.Windows.Forms.Padding(0);
             tableLayoutPanelPos.Name = "tableLayoutPanelPos";
             tableLayoutPanelPos.RowCount = 2;
@@ -381,7 +405,7 @@ namespace StarlightResize
             // checkBoxReverseAspectRatio
             // 
             checkBoxReverseAspectRatio.AutoSize = true;
-            checkBoxReverseAspectRatio.Location = new System.Drawing.Point(71, 90);
+            checkBoxReverseAspectRatio.Location = new System.Drawing.Point(71, 96);
             checkBoxReverseAspectRatio.Name = "checkBoxReverseAspectRatio";
             checkBoxReverseAspectRatio.Size = new System.Drawing.Size(50, 19);
             checkBoxReverseAspectRatio.TabIndex = 12;
@@ -411,7 +435,7 @@ namespace StarlightResize
             // 
             // buttonResize
             // 
-            buttonResize.Location = new System.Drawing.Point(11, 176);
+            buttonResize.Location = new System.Drawing.Point(11, 177);
             buttonResize.Name = "buttonResize";
             buttonResize.Size = new System.Drawing.Size(75, 23);
             buttonResize.TabIndex = 22;
@@ -450,6 +474,7 @@ namespace StarlightResize
             flowLayoutPanelRes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownWidth).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownHeight).EndInit();
+            flowLayoutPanelProcess.ResumeLayout(false);
             tableLayoutPanelPos.ResumeLayout(false);
             tableLayoutPanelPos.PerformLayout();
             ResumeLayout(false);
@@ -471,6 +496,8 @@ namespace StarlightResize
         private System.Windows.Forms.Label labelScreenShotState;
         private System.Windows.Forms.Label labelProcess;
         private System.Windows.Forms.ComboBox comboBoxProcess;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelProcess;
+        private System.Windows.Forms.Button buttonRefresh;
     }
 }
 

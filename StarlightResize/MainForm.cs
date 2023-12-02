@@ -23,16 +23,15 @@ namespace StarlightResize
 
         private bool IsAspectRatioReversed => checkBoxReverseAspectRatio.Checked;
 
-        private static readonly ProcessItem _reloadProcessListItem = new ProcessItem() { Text = "再読み込み...", ProcessId = -1 };
-
-        private RadioButton[] _radioButtonPosList => new RadioButton[]
-        {
-            radioButtonPosLeftTop,
-            radioButtonPosCenter,
-            radioButtonPosRightTop,
-            radioButtonPosLeftBottom,
-            radioButtonPosRightBottom
-        };
+        private RadioButton[] _radioButtonPosList =>
+            new RadioButton[]
+            {
+                radioButtonPosLeftTop,
+                radioButtonPosCenter,
+                radioButtonPosRightTop,
+                radioButtonPosLeftBottom,
+                radioButtonPosRightBottom
+            };
 
         private void ReloadDisplayList()
         {
@@ -49,25 +48,53 @@ namespace StarlightResize
             }
         }
 
-        private void ReloadProcessList()
+        private void ReloadProcessList(string text = null)
         {
             comboBoxProcess.Items.Clear();
 
-            var processes = Process.GetProcesses()
+            var processes = Process
+                .GetProcesses()
                 .Where(p => p.Id != Process.GetCurrentProcess().Id)
                 .Where(p => !string.IsNullOrEmpty(p.MainWindowTitle))
-                .Select(p => new ProcessItem() { Text = $"{p.ProcessName} | {p.MainWindowTitle}", ProcessId = p.Id });
+                .Select(
+                    p =>
+                        new ProcessItem()
+                        {
+                            Text = $"{p.ProcessName} | {p.MainWindowTitle}",
+                            ProcessId = p.Id
+                        }
+                );
 
             foreach (var process in processes)
             {
                 comboBoxProcess.Items.Add(process);
             }
-            comboBoxProcess.Items.Add(_reloadProcessListItem);
 
             if (processes.Any())
             {
-                comboBoxProcess.SelectedItem = comboBoxProcess.Items[0];
+                if (text != null)
+                {
+                    for (int i = 0; i < comboBoxProcess.Items.Count; i++)
+                    {
+                        if ((comboBoxProcess.Items[i] as ProcessItem).Text == text)
+                        {
+                            comboBoxProcess.SelectedItem = comboBoxProcess.Items[i];
+                            return;
+                        }
+                    }
+
+                    comboBoxProcess.SelectedItem = comboBoxProcess.Items[0];
+                }
+                else
+                {
+                    comboBoxProcess.SelectedItem = comboBoxProcess.Items[0];
+                }
             }
+        }
+
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            ReloadProcessList((comboBoxProcess.SelectedItem as ProcessItem).Text);
         }
 
         private void radionButtonPos_CheckedChanged(object sender, EventArgs e)
@@ -84,35 +111,37 @@ namespace StarlightResize
 
         private Process GetTargetProcess()
         {
-            var targetProcessId = (comboBoxProcess.SelectedItem as ProcessItem).ProcessId;
+            var targetProcessItem = comboBoxProcess.SelectedItem as ProcessItem;
 
             Process targetProcess = null;
             try
             {
-                targetProcess = Process.GetProcessById(targetProcessId);
+                targetProcess = Process.GetProcessById(targetProcessItem.ProcessId);
             }
             catch
             {
-                // Ignore all exceptions
+                ReloadProcessList(targetProcessItem.Text);
+                try
+                {
+                    if (
+                        targetProcessItem.Text != (comboBoxProcess.SelectedItem as ProcessItem).Text
+                    )
+                    {
+                        return null;
+                    }
+                    else
+                    {
+                        targetProcessItem = comboBoxProcess.SelectedItem as ProcessItem;
+                        targetProcess = Process.GetProcessById(targetProcessItem.ProcessId);
+                    }
+                }
+                catch
+                {
+                    // Ignore all exceptions
+                }
             }
 
             return targetProcess;
-        }
-
-        private void comboBoxProcess_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxProcess.SelectedItem is null)
-            {
-                return;
-            }
-
-            var selectedItem = comboBoxProcess.SelectedItem as ProcessItem;
-            if (selectedItem.Text == _reloadProcessListItem.Text)
-            {
-                comboBoxProcess.Enabled = false;
-                ReloadProcessList();
-                comboBoxProcess.Enabled = true;
-            }
         }
 
         private void buttonResize_Click(object sender, EventArgs e)
@@ -120,13 +149,23 @@ namespace StarlightResize
             var screen = comboBoxDisplay.SelectedItem as Screen;
             if (screen == null)
             {
-                MessageBox.Show("ディスプレイが指定されていません。\n先にウィンドウを表示するディスプレイを選択してください。", "StarlightResize", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "ディスプレイが指定されていません。\n先にウィンドウを表示するディスプレイを選択してください。",
+                    "StarlightResize",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
                 return;
             }
             var process = GetTargetProcess();
             if (process == null)
             {
-                MessageBox.Show("ウィンドウが見つかりませんでした。\nアプリケーションが起動していることを確認してください。", "StarlightResize", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "ウィンドウが見つかりませんでした。\nアプリケーションが起動していることを確認してください。",
+                    "StarlightResize",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
                 return;
             }
 
@@ -172,8 +211,22 @@ namespace StarlightResize
 
             // 違うDPIのモニタからウィンドウを移動するとデレステ側？でDPIの差分からのウィンドウサイズ補正がかかる
             // ので2回リサイズ処理を行う
-            PInvoke.MoveWindow(hWnd, newPoint.X, newPoint.Y, width + frameWidth, height + frameHeight, true);
-            PInvoke.MoveWindow(hWnd, newPoint.X, newPoint.Y, width + frameWidth, height + frameHeight, true);
+            PInvoke.MoveWindow(
+                hWnd,
+                newPoint.X,
+                newPoint.Y,
+                width + frameWidth,
+                height + frameHeight,
+                true
+            );
+            PInvoke.MoveWindow(
+                hWnd,
+                newPoint.X,
+                newPoint.Y,
+                width + frameWidth,
+                height + frameHeight,
+                true
+            );
         }
 
         private void SetResolution(int width, int height)
@@ -235,7 +288,12 @@ namespace StarlightResize
             var screen = comboBoxDisplay.SelectedItem as Screen;
             if (screen == null)
             {
-                MessageBox.Show("ディスプレイが指定されていません。\n先にウィンドウを表示するディスプレイを選択してください。", "StarlightResize", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "ディスプレイが指定されていません。\n先にウィンドウを表示するディスプレイを選択してください。",
+                    "StarlightResize",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
                 return;
             }
 
@@ -251,7 +309,10 @@ namespace StarlightResize
 
         private string GetScreenshotFolder()
         {
-            var picturesFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures, Environment.SpecialFolderOption.Create);
+            var picturesFolder = Environment.GetFolderPath(
+                Environment.SpecialFolder.MyPictures,
+                Environment.SpecialFolderOption.Create
+            );
             var starlightResizePicturesFolder = picturesFolder + "\\StarlightResize";
             Directory.CreateDirectory(starlightResizePicturesFolder);
             return starlightResizePicturesFolder;
@@ -265,18 +326,31 @@ namespace StarlightResize
             var process = GetTargetProcess();
             if (process == null)
             {
-                MessageBox.Show("ウィンドウが見つかりませんでした。\nアプリケーションが起動していることを確認してください。", "StarlightResize", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "ウィンドウが見つかりませんでした。\nアプリケーションが起動していることを確認してください。",
+                    "StarlightResize",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
                 return;
             }
             var hWnd = (HWND)process.MainWindowHandle;
             PInvoke.GetClientRect(hWnd, out var clientRect);
 
-            using var bitmap = new Bitmap(clientRect.right - clientRect.left, clientRect.bottom - clientRect.top, PixelFormat.Format24bppRgb);
+            using var bitmap = new Bitmap(
+                clientRect.right - clientRect.left,
+                clientRect.bottom - clientRect.top,
+                PixelFormat.Format24bppRgb
+            );
             var graphics = Graphics.FromImage(bitmap);
             var dc = (HDC)graphics.GetHdc();
 
             // Windows 7 だと PW_RENDERFULLCONTENT が使えないので動かないかも (いい加減 10 にしてください)
-            bool result = PInvoke.PrintWindow(hWnd, dc, PRINT_WINDOW_FLAGS.PW_CLIENTONLY | (PRINT_WINDOW_FLAGS)PInvoke.PW_RENDERFULLCONTENT);
+            bool result = PInvoke.PrintWindow(
+                hWnd,
+                dc,
+                PRINT_WINDOW_FLAGS.PW_CLIENTONLY | (PRINT_WINDOW_FLAGS)PInvoke.PW_RENDERFULLCONTENT
+            );
             graphics.ReleaseHdc(dc);
             graphics.Dispose();
             byte[] png;
@@ -288,13 +362,18 @@ namespace StarlightResize
 
             string GetNotExistsFileName(string prefix, string suffix, int i = 0)
             {
-                if (i > 9) throw new Exception("ファイル多すぎです。");
+                if (i > 9)
+                    throw new Exception("ファイル多すぎです。");
                 var path = i == 0 ? $"{prefix}{suffix}" : $"{prefix}_{i}{suffix}";
-                if (!File.Exists(path)) return path;
+                if (!File.Exists(path))
+                    return path;
                 return GetNotExistsFileName(prefix, suffix, i + 1);
             }
 
-            var path = GetNotExistsFileName($"{starlightResizePicturesFolder}\\{DateTime.Now.ToString("yyyyMMdd_HHmmss")}", ".png");
+            var path = GetNotExistsFileName(
+                $"{starlightResizePicturesFolder}\\{DateTime.Now.ToString("yyyyMMdd_HHmmss")}",
+                ".png"
+            );
             using (var stream = new FileStream(path, FileMode.Create))
             {
                 stream.Write(png);
