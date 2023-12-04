@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
@@ -10,10 +10,25 @@
     <_SuppressWinFormsTrimError>true</_SuppressWinFormsTrimError>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <OptimizationPreference>Size</OptimizationPreference>
+    <XmlResolverIsNetworkingEnabledByDefault>false</XmlResolverIsNetworkingEnabledByDefault>
+  </PropertyGroup>
+
+  <Target Name="RemoveUnusedReferences" BeforeTargets="WriteIlcRspFileForCompilation">
+    <ItemGroup>
+      <IlcReference Remove="@(IlcReference)" Condition="'%(Filename)' == 'PresentationFramework'" />
+      <IlcReference Remove="@(IlcReference)" Condition="'%(Filename)' == 'PresentationCore'" />
+    </ItemGroup>
+  </Target>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.18-beta">
+    <RuntimeHostConfigurationOption Include="System.Windows.Forms.PictureBox.UseWebRequest" Value="false" Trim="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.49-beta">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 
