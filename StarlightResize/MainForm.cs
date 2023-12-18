@@ -370,6 +370,8 @@ namespace StarlightResize
                 return GetNotExistsFileName(prefix, suffix, i + 1);
             }
 
+            ClipboardInterop.SetClipboardData(bitmap);
+
             var path = GetNotExistsFileName(
                 $"{starlightResizePicturesFolder}\\{DateTime.Now.ToString("yyyyMMdd_HHmmss")}",
                 ".png"

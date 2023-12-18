@@ -7,3 +7,15 @@ ReleaseDC
 PrintWindow
 PRINT_WINDOW_FLAGS
 PW_RENDERFULLCONTENT
+
+CreateCompatibleDC
+DeleteDC
+SelectObject
+DeleteObject
+CreateCompatibleBitmap
+BitBlt
+
+OpenClipboard
+CloseClipboard
+EmptyClipboard
+SetClipboardData
