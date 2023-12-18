@@ -57,6 +57,12 @@ namespace StarlightResize
             radioButtonPosCenter = new System.Windows.Forms.RadioButton();
             radioButtonPosRightBottom = new System.Windows.Forms.RadioButton();
             radioButtonPosRightTop = new System.Windows.Forms.RadioButton();
+            groupBoxControl = new System.Windows.Forms.GroupBox();
+            labelFactorMul = new System.Windows.Forms.Label();
+            labelWidthFactor = new System.Windows.Forms.Label();
+            labelLengthFactor = new System.Windows.Forms.Label();
+            numericUpDownWidthFactor = new System.Windows.Forms.NumericUpDown();
+            numericUpDownLengthFactor = new System.Windows.Forms.NumericUpDown();
             checkBoxReverseAspectRatio = new System.Windows.Forms.CheckBox();
             buttonResize = new System.Windows.Forms.Button();
             labelScreenShotState = new System.Windows.Forms.Label();
@@ -82,6 +88,9 @@ namespace StarlightResize
             ((System.ComponentModel.ISupportInitialize)numericUpDownHeight).BeginInit();
             flowLayoutPanelProcess.SuspendLayout();
             tableLayoutPanelPos.SuspendLayout();
+            groupBoxControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownWidthFactor).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownLengthFactor).BeginInit();
             SuspendLayout();
             // 
             // tableLayoutPanelMain
@@ -100,7 +109,7 @@ namespace StarlightResize
             tableLayoutPanelMain.Controls.Add(labelProcess, 0, 1);
             tableLayoutPanelMain.Controls.Add(flowLayoutPanelProcess, 1, 1);
             tableLayoutPanelMain.Controls.Add(tableLayoutPanelPos, 0, 4);
-            tableLayoutPanelMain.Controls.Add(checkBoxReverseAspectRatio, 1, 3);
+            tableLayoutPanelMain.Controls.Add(groupBoxControl, 1, 3);
             tableLayoutPanelMain.Location = new System.Drawing.Point(11, 9);
             tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             tableLayoutPanelMain.RowCount = 5;
@@ -110,7 +119,7 @@ namespace StarlightResize
             tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            tableLayoutPanelMain.Size = new System.Drawing.Size(682, 168);
+            tableLayoutPanelMain.Size = new System.Drawing.Size(682, 195);
             tableLayoutPanelMain.TabIndex = 23;
             // 
             // comboBoxDisplay
@@ -136,7 +145,7 @@ namespace StarlightResize
             // 
             labelPos.Anchor = System.Windows.Forms.AnchorStyles.Right;
             labelPos.AutoSize = true;
-            labelPos.Location = new System.Drawing.Point(31, 138);
+            labelPos.Location = new System.Drawing.Point(31, 165);
             labelPos.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             labelPos.Name = "labelPos";
             labelPos.Size = new System.Drawing.Size(34, 15);
@@ -333,7 +342,7 @@ namespace StarlightResize
             tableLayoutPanelPos.Controls.Add(radioButtonPosCenter, 1, 0);
             tableLayoutPanelPos.Controls.Add(radioButtonPosRightBottom, 2, 1);
             tableLayoutPanelPos.Controls.Add(radioButtonPosRightTop, 2, 0);
-            tableLayoutPanelPos.Location = new System.Drawing.Point(68, 118);
+            tableLayoutPanelPos.Location = new System.Drawing.Point(68, 145);
             tableLayoutPanelPos.Margin = new System.Windows.Forms.Padding(0);
             tableLayoutPanelPos.Name = "tableLayoutPanelPos";
             tableLayoutPanelPos.RowCount = 2;
@@ -401,10 +410,70 @@ namespace StarlightResize
             radioButtonPosRightTop.UseVisualStyleBackColor = true;
             radioButtonPosRightTop.CheckedChanged += radionButtonPos_CheckedChanged;
             // 
+            // groupBoxControl
+            // 
+            groupBoxControl.Controls.Add(labelFactorMul);
+            groupBoxControl.Controls.Add(labelWidthFactor);
+            groupBoxControl.Controls.Add(labelLengthFactor);
+            groupBoxControl.Controls.Add(numericUpDownWidthFactor);
+            groupBoxControl.Controls.Add(numericUpDownLengthFactor);
+            groupBoxControl.Controls.Add(checkBoxReverseAspectRatio);
+            groupBoxControl.Location = new System.Drawing.Point(71, 96);
+            groupBoxControl.Name = "groupBoxControl";
+            groupBoxControl.Size = new System.Drawing.Size(220, 46);
+            groupBoxControl.TabIndex = 28;
+            groupBoxControl.TabStop = false;
+            groupBoxControl.Text = "制御";
+            // 
+            // labelFactorMul
+            // 
+            labelFactorMul.AutoSize = true;
+            labelFactorMul.Location = new System.Drawing.Point(129, 21);
+            labelFactorMul.Name = "labelFactorMul";
+            labelFactorMul.Size = new System.Drawing.Size(13, 15);
+            labelFactorMul.TabIndex = 17;
+            labelFactorMul.Text = "x";
+            // 
+            // labelWidthFactor
+            // 
+            labelWidthFactor.AutoSize = true;
+            labelWidthFactor.Location = new System.Drawing.Point(143, 22);
+            labelWidthFactor.Name = "labelWidthFactor";
+            labelWidthFactor.Size = new System.Drawing.Size(19, 15);
+            labelWidthFactor.TabIndex = 16;
+            labelWidthFactor.Text = "短";
+            // 
+            // labelLengthFactor
+            // 
+            labelLengthFactor.AutoSize = true;
+            labelLengthFactor.Location = new System.Drawing.Point(62, 23);
+            labelLengthFactor.Name = "labelLengthFactor";
+            labelLengthFactor.Size = new System.Drawing.Size(19, 15);
+            labelLengthFactor.TabIndex = 15;
+            labelLengthFactor.Text = "長";
+            // 
+            // numericUpDownWidthFactor
+            // 
+            numericUpDownWidthFactor.Location = new System.Drawing.Point(168, 17);
+            numericUpDownWidthFactor.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownWidthFactor.Name = "numericUpDownWidthFactor";
+            numericUpDownWidthFactor.Size = new System.Drawing.Size(40, 23);
+            numericUpDownWidthFactor.TabIndex = 14;
+            numericUpDownWidthFactor.Value = new decimal(new int[] { 9, 0, 0, 0 });
+            // 
+            // numericUpDownLengthFactor
+            // 
+            numericUpDownLengthFactor.Location = new System.Drawing.Point(87, 17);
+            numericUpDownLengthFactor.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownLengthFactor.Name = "numericUpDownLengthFactor";
+            numericUpDownLengthFactor.Size = new System.Drawing.Size(40, 23);
+            numericUpDownLengthFactor.TabIndex = 13;
+            numericUpDownLengthFactor.Value = new decimal(new int[] { 16, 0, 0, 0 });
+            // 
             // checkBoxReverseAspectRatio
             // 
             checkBoxReverseAspectRatio.AutoSize = true;
-            checkBoxReverseAspectRatio.Location = new System.Drawing.Point(71, 96);
+            checkBoxReverseAspectRatio.Location = new System.Drawing.Point(6, 22);
             checkBoxReverseAspectRatio.Name = "checkBoxReverseAspectRatio";
             checkBoxReverseAspectRatio.Size = new System.Drawing.Size(50, 19);
             checkBoxReverseAspectRatio.TabIndex = 12;
@@ -414,7 +483,7 @@ namespace StarlightResize
             // 
             // buttonScreenShot
             // 
-            buttonScreenShot.Location = new System.Drawing.Point(11, 206);
+            buttonScreenShot.Location = new System.Drawing.Point(11, 240);
             buttonScreenShot.Name = "buttonScreenShot";
             buttonScreenShot.Size = new System.Drawing.Size(99, 23);
             buttonScreenShot.TabIndex = 24;
@@ -424,7 +493,7 @@ namespace StarlightResize
             // 
             // buttonOpenScreenShotFolder
             // 
-            buttonOpenScreenShotFolder.Location = new System.Drawing.Point(569, 206);
+            buttonOpenScreenShotFolder.Location = new System.Drawing.Point(569, 240);
             buttonOpenScreenShotFolder.Name = "buttonOpenScreenShotFolder";
             buttonOpenScreenShotFolder.Size = new System.Drawing.Size(118, 23);
             buttonOpenScreenShotFolder.TabIndex = 25;
@@ -434,7 +503,7 @@ namespace StarlightResize
             // 
             // buttonResize
             // 
-            buttonResize.Location = new System.Drawing.Point(11, 177);
+            buttonResize.Location = new System.Drawing.Point(11, 212);
             buttonResize.Name = "buttonResize";
             buttonResize.Size = new System.Drawing.Size(75, 23);
             buttonResize.TabIndex = 22;
@@ -445,7 +514,7 @@ namespace StarlightResize
             // labelScreenShotState
             // 
             labelScreenShotState.AutoSize = true;
-            labelScreenShotState.Location = new System.Drawing.Point(116, 210);
+            labelScreenShotState.Location = new System.Drawing.Point(116, 244);
             labelScreenShotState.Name = "labelScreenShotState";
             labelScreenShotState.Size = new System.Drawing.Size(55, 15);
             labelScreenShotState.TabIndex = 26;
@@ -456,7 +525,7 @@ namespace StarlightResize
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            ClientSize = new System.Drawing.Size(700, 239);
+            ClientSize = new System.Drawing.Size(700, 272);
             Controls.Add(labelScreenShotState);
             Controls.Add(buttonOpenScreenShotFolder);
             Controls.Add(buttonScreenShot);
@@ -476,6 +545,10 @@ namespace StarlightResize
             flowLayoutPanelProcess.ResumeLayout(false);
             tableLayoutPanelPos.ResumeLayout(false);
             tableLayoutPanelPos.PerformLayout();
+            groupBoxControl.ResumeLayout(false);
+            groupBoxControl.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownWidthFactor).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownLengthFactor).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -497,6 +570,12 @@ namespace StarlightResize
         private System.Windows.Forms.ComboBox comboBoxProcess;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelProcess;
         private System.Windows.Forms.Button buttonRefresh;
+        private System.Windows.Forms.GroupBox groupBoxControl;
+        private System.Windows.Forms.NumericUpDown numericUpDownWidthFactor;
+        private System.Windows.Forms.NumericUpDown numericUpDownLengthFactor;
+        private System.Windows.Forms.Label labelWidthFactor;
+        private System.Windows.Forms.Label labelLengthFactor;
+        private System.Windows.Forms.Label labelFactorMul;
     }
 }
 

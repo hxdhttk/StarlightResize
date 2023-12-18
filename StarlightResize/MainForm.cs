@@ -23,6 +23,10 @@ namespace StarlightResize
 
         private bool IsAspectRatioReversed => checkBoxReverseAspectRatio.Checked;
 
+        private int LengthFactor => (int)numericUpDownLengthFactor.Value;
+
+        private int WidthFactor => (int)numericUpDownWidthFactor.Value;
+
         private RadioButton[] _radioButtonPosList =>
             new RadioButton[]
             {
@@ -237,11 +241,11 @@ namespace StarlightResize
         {
             if (IsAspectRatioReversed)
             {
-                SetResolution(405, 720);
+                SetResolution(720 / LengthFactor * WidthFactor, 720);
             }
             else
             {
-                SetResolution(1280, 720);
+                SetResolution(1280, 1280 / LengthFactor * WidthFactor);
             }
         }
 
@@ -249,11 +253,11 @@ namespace StarlightResize
         {
             if (IsAspectRatioReversed)
             {
-                SetResolution(608, 1080);
+                SetResolution(1080 / LengthFactor * WidthFactor, 1080);
             }
             else
             {
-                SetResolution(1920, 1080);
+                SetResolution(1920, 1920 / LengthFactor * WidthFactor);
             }
         }
 
@@ -261,11 +265,11 @@ namespace StarlightResize
         {
             if (IsAspectRatioReversed)
             {
-                SetResolution(810, 1440);
+                SetResolution(1440 / LengthFactor * WidthFactor, 1440);
             }
             else
             {
-                SetResolution(2560, 1440);
+                SetResolution(2560, 2560 / LengthFactor * WidthFactor);
             }
         }
 
@@ -273,11 +277,11 @@ namespace StarlightResize
         {
             if (IsAspectRatioReversed)
             {
-                SetResolution(1215, 2160);
+                SetResolution(2160 / LengthFactor * WidthFactor, 2160);
             }
             else
             {
-                SetResolution(3840, 2160);
+                SetResolution(3840, 3840 / LengthFactor * WidthFactor);
             }
         }
 
@@ -301,11 +305,17 @@ namespace StarlightResize
 
             if (IsAspectRatioReversed)
             {
-                SetResolution((screen.Bounds.Height / 16) * 9, screen.Bounds.Height);
+                SetResolution(
+                    (screen.Bounds.Height / LengthFactor) * WidthFactor,
+                    screen.Bounds.Height
+                );
             }
             else
             {
-                SetResolution(screen.Bounds.Width, (screen.Bounds.Width / 16) * 9);
+                SetResolution(
+                    screen.Bounds.Width,
+                    (screen.Bounds.Width / LengthFactor) * WidthFactor
+                );
             }
         }
 
@@ -397,11 +407,11 @@ namespace StarlightResize
             decimal heightValue;
             if (IsAspectRatioReversed)
             {
-                heightValue = (currentValue / 9) * 16;
+                heightValue = (currentValue / WidthFactor) * LengthFactor;
             }
             else
             {
-                heightValue = (currentValue / 16) * 9;
+                heightValue = (currentValue / LengthFactor) * WidthFactor;
             }
 
             numericUpDownHeight.Value = heightValue;
@@ -414,11 +424,11 @@ namespace StarlightResize
             decimal widthValue;
             if (IsAspectRatioReversed)
             {
-                widthValue = (currentValue / 16) * 9;
+                widthValue = (currentValue / LengthFactor) * WidthFactor;
             }
             else
             {
-                widthValue = (currentValue / 9) * 16;
+                widthValue = (currentValue / WidthFactor) * LengthFactor;
             }
 
             numericUpDownWidth.Value = widthValue;
