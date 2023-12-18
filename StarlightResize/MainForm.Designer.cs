@@ -460,6 +460,7 @@ namespace StarlightResize
             numericUpDownWidthFactor.Size = new System.Drawing.Size(40, 23);
             numericUpDownWidthFactor.TabIndex = 14;
             numericUpDownWidthFactor.Value = new decimal(new int[] { 9, 0, 0, 0 });
+            numericUpDownWidthFactor.ValueChanged += numericUpDownWidth_ValueChanged;
             // 
             // numericUpDownLengthFactor
             // 
@@ -469,6 +470,7 @@ namespace StarlightResize
             numericUpDownLengthFactor.Size = new System.Drawing.Size(40, 23);
             numericUpDownLengthFactor.TabIndex = 13;
             numericUpDownLengthFactor.Value = new decimal(new int[] { 16, 0, 0, 0 });
+            numericUpDownLengthFactor.ValueChanged += numericUpDownHeight_ValueChanged;
             // 
             // checkBoxReverseAspectRatio
             // 
