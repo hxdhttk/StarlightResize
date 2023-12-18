@@ -5,7 +5,7 @@ using Windows.Win32.Graphics.Gdi;
 
 namespace StarlightResize
 {
-    internal class ClipboardInterop
+    internal static class ClipboardInterop
     {
         private const uint CF_BITMAP = 2;
 
@@ -65,7 +65,7 @@ namespace StarlightResize
             PInvoke.SelectObject(sourceDC, sourceBitmapSelection);
             PInvoke.DeleteDC(sourceDC);
 
-            PInvoke.ReleaseDC(HWND.Null, screenDC);
+            _ = PInvoke.ReleaseDC(HWND.Null, screenDC);
 
             return compatibleBitmap;
         }

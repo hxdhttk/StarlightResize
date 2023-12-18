@@ -44,17 +44,17 @@ namespace StarlightResize
             if (comboBoxDisplay.Items.Count > 0)
             {
                 comboBoxDisplay.SelectedItem = comboBoxDisplay.Items[0];
-                buttonSetResToDisplay_Click(this, default);
+                SetResToDisplay();
             }
         }
 
-        private void ReloadProcessList(string text = null)
+        private void ReloadProcessList(string? text = null)
         {
             comboBoxProcess.Items.Clear();
 
             var processes = Process
                 .GetProcesses()
-                .Where(p => p.Id != Process.GetCurrentProcess().Id)
+                .Where(p => p.Id != Environment.ProcessId)
                 .Where(p => !string.IsNullOrEmpty(p.MainWindowTitle))
                 .Select(
                     p =>
@@ -76,7 +76,7 @@ namespace StarlightResize
                 {
                     for (int i = 0; i < comboBoxProcess.Items.Count; i++)
                     {
-                        if ((comboBoxProcess.Items[i] as ProcessItem).Text == text)
+                        if ((comboBoxProcess.Items[i] as ProcessItem)?.Text == text)
                         {
                             comboBoxProcess.SelectedItem = comboBoxProcess.Items[i];
                             return;
@@ -94,13 +94,13 @@ namespace StarlightResize
 
         private void buttonRefresh_Click(object sender, EventArgs e)
         {
-            ReloadProcessList((comboBoxProcess.SelectedItem as ProcessItem).Text);
+            ReloadProcessList((comboBoxProcess.SelectedItem as ProcessItem)?.Text);
         }
 
         private void radionButtonPos_CheckedChanged(object sender, EventArgs e)
         {
             var radioButton = sender as RadioButton;
-            if (radioButton.Checked)
+            if (radioButton?.Checked ?? false)
             {
                 foreach (var item in _radioButtonPosList)
                 {
@@ -109,22 +109,23 @@ namespace StarlightResize
             }
         }
 
-        private Process GetTargetProcess()
+        private Process? GetTargetProcess()
         {
             var targetProcessItem = comboBoxProcess.SelectedItem as ProcessItem;
 
-            Process targetProcess = null;
+            Process? targetProcess = null;
             try
             {
-                targetProcess = Process.GetProcessById(targetProcessItem.ProcessId);
+                targetProcess = Process.GetProcessById(targetProcessItem?.ProcessId ?? -1);
             }
             catch
             {
-                ReloadProcessList(targetProcessItem.Text);
+                ReloadProcessList(targetProcessItem?.Text);
                 try
                 {
                     if (
-                        targetProcessItem.Text != (comboBoxProcess.SelectedItem as ProcessItem).Text
+                        targetProcessItem?.Text
+                        != (comboBoxProcess.SelectedItem as ProcessItem)?.Text
                     )
                     {
                         return null;
@@ -132,7 +133,7 @@ namespace StarlightResize
                     else
                     {
                         targetProcessItem = comboBoxProcess.SelectedItem as ProcessItem;
-                        targetProcess = Process.GetProcessById(targetProcessItem.ProcessId);
+                        targetProcess = Process.GetProcessById(targetProcessItem?.ProcessId ?? -1);
                     }
                 }
                 catch
@@ -146,8 +147,7 @@ namespace StarlightResize
 
         private void buttonResize_Click(object sender, EventArgs e)
         {
-            var screen = comboBoxDisplay.SelectedItem as Screen;
-            if (screen == null)
+            if (comboBoxDisplay.SelectedItem is not Screen screen)
             {
                 MessageBox.Show(
                     "ディスプレイが指定されていません。\n先にウィンドウを表示するディスプレイを選択してください。",
@@ -184,9 +184,7 @@ namespace StarlightResize
             var clientHeight = clientRect.bottom - clientRect.top;
             var frameHeight = windowHeight - clientHeight;
 
-            var newPoint = new Point();
-            newPoint.X = screen.Bounds.X;
-            newPoint.Y = screen.Bounds.Y;
+            var newPoint = new Point() { X = screen.Bounds.X, Y = screen.Bounds.Y };
             if (radioButtonPosCenter.Checked)
             {
                 // 中央寄せ
@@ -285,8 +283,12 @@ namespace StarlightResize
 
         private void buttonSetResToDisplay_Click(object sender, EventArgs e)
         {
-            var screen = comboBoxDisplay.SelectedItem as Screen;
-            if (screen == null)
+            SetResToDisplay();
+        }
+
+        private void SetResToDisplay()
+        {
+            if (comboBoxDisplay.SelectedItem is not Screen screen)
             {
                 MessageBox.Show(
                     "ディスプレイが指定されていません。\n先にウィンドウを表示するディスプレイを選択してください。",
@@ -307,7 +309,7 @@ namespace StarlightResize
             }
         }
 
-        private string GetScreenshotFolder()
+        private static string GetScreenshotFolder()
         {
             var picturesFolder = Environment.GetFolderPath(
                 Environment.SpecialFolder.MyPictures,
@@ -360,7 +362,7 @@ namespace StarlightResize
                 png = stream.ToArray();
             }
 
-            string GetNotExistsFileName(string prefix, string suffix, int i = 0)
+            static string GetNotExistsFileName(string prefix, string suffix, int i = 0)
             {
                 if (i > 9)
                     throw new Exception("ファイル多すぎです。");
@@ -373,7 +375,7 @@ namespace StarlightResize
             ClipboardInterop.SetClipboardData(bitmap);
 
             var path = GetNotExistsFileName(
-                $"{starlightResizePicturesFolder}\\{DateTime.Now.ToString("yyyyMMdd_HHmmss")}",
+                $"{starlightResizePicturesFolder}\\{DateTime.Now:yyyyMMdd_HHmmss}",
                 ".png"
             );
             using (var stream = new FileStream(path, FileMode.Create))
@@ -429,7 +431,7 @@ namespace StarlightResize
 
         public class ProcessItem
         {
-            public string Text { get; init; }
+            public string Text { get; init; } = string.Empty;
 
             public int ProcessId { get; init; }
 

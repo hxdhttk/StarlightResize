@@ -42,7 +42,6 @@ namespace StarlightResize
             System.Windows.Forms.Button buttonSetResTo2560;
             System.Windows.Forms.Button buttonSetResTo3840;
             System.Windows.Forms.Button buttonSetResToDisplay;
-            System.Windows.Forms.FlowLayoutPanel flowLayoutPanelProcess;
             System.Windows.Forms.TableLayoutPanel tableLayoutPanelPos;
             System.Windows.Forms.Button buttonScreenShot;
             System.Windows.Forms.Button buttonOpenScreenShotFolder;
@@ -50,6 +49,7 @@ namespace StarlightResize
             numericUpDownWidth = new System.Windows.Forms.NumericUpDown();
             numericUpDownHeight = new System.Windows.Forms.NumericUpDown();
             labelProcess = new System.Windows.Forms.Label();
+            flowLayoutPanelProcess = new System.Windows.Forms.FlowLayoutPanel();
             comboBoxProcess = new System.Windows.Forms.ComboBox();
             buttonRefresh = new System.Windows.Forms.Button();
             radioButtonPosLeftTop = new System.Windows.Forms.RadioButton();
@@ -73,7 +73,6 @@ namespace StarlightResize
             buttonSetResTo2560 = new System.Windows.Forms.Button();
             buttonSetResTo3840 = new System.Windows.Forms.Button();
             buttonSetResToDisplay = new System.Windows.Forms.Button();
-            flowLayoutPanelProcess = new System.Windows.Forms.FlowLayoutPanel();
             tableLayoutPanelPos = new System.Windows.Forms.TableLayoutPanel();
             buttonScreenShot = new System.Windows.Forms.Button();
             buttonOpenScreenShotFolder = new System.Windows.Forms.Button();
