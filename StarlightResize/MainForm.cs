@@ -349,27 +349,42 @@ namespace StarlightResize
             var hWnd = (HWND)process.MainWindowHandle;
             PInvoke.GetClientRect(hWnd, out var clientRect);
 
+            var isHdrEnabled = HdrHelper.IsHdrEnabledForWindow(hWnd);
+
             using var bitmap = new Bitmap(
                 clientRect.right - clientRect.left,
                 clientRect.bottom - clientRect.top,
                 PixelFormat.Format24bppRgb
             );
-            var graphics = Graphics.FromImage(bitmap);
-            var dc = (HDC)graphics.GetHdc();
+            bool result;
+            using (var graphics = Graphics.FromImage(bitmap))
+            {
+                var dc = (HDC)graphics.GetHdc();
+                try
+                {
+                    result = PInvoke.PrintWindow(
+                        hWnd,
+                        dc,
+                        PRINT_WINDOW_FLAGS.PW_CLIENTONLY | (PRINT_WINDOW_FLAGS)PInvoke.PW_RENDERFULLCONTENT
+                    );
+                }
+                finally
+                {
+                    graphics.ReleaseHdc(dc);
+                }
+            }
+            if (!result)
+            {
+                labelScreenShotState.Text = "スクリーンショットの取得に失敗しました。";
+                return;
+            }
 
-            // Windows 7 だと PW_RENDERFULLCONTENT が使えないので動かないかも (いい加減 10 にしてください)
-            bool result = PInvoke.PrintWindow(
-                hWnd,
-                dc,
-                PRINT_WINDOW_FLAGS.PW_CLIENTONLY | (PRINT_WINDOW_FLAGS)PInvoke.PW_RENDERFULLCONTENT
-            );
-            graphics.ReleaseHdc(dc);
-            graphics.Dispose();
-            byte[] png;
+            // PrintWindow uses GDI and produces an SDR screenshot, even on HDR displays.
+            byte[] imageData;
             using (var stream = new MemoryStream())
             {
                 bitmap.Save(stream, ImageFormat.Png);
-                png = stream.ToArray();
+                imageData = stream.ToArray();
             }
 
             static string GetNotExistsFileName(string prefix, string suffix, int i = 0)
@@ -390,9 +405,11 @@ namespace StarlightResize
             );
             using (var stream = new FileStream(path, FileMode.Create))
             {
-                stream.Write(png);
+                stream.Write(imageData);
             }
-            labelScreenShotState.Text = $"{Path.GetFileName(path)} に保存しました。";
+
+            var hdrLabel = isHdrEnabled ? " (HDR ディスプレイ: SDR 画像として保存)" : "";
+            labelScreenShotState.Text = $"{Path.GetFileName(path)} に保存しました。{hdrLabel}";
         }
 
         private void buttonOpenScreenShotFolder_Click(object sender, EventArgs e)

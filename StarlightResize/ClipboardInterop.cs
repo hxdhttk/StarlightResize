@@ -9,7 +9,7 @@ namespace StarlightResize
     {
         private const uint CF_BITMAP = 2;
 
-        internal static void SetClipboardData(Bitmap image)
+        internal unsafe static void SetClipboardData(Bitmap image)
         {
             if (PInvoke.OpenClipboard(HWND.Null))
             {

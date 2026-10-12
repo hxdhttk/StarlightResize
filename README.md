@@ -20,6 +20,9 @@ DISCLAIMER: このツールは MIT License でライセンスされています�
 - ウィンドウの配置方法の設定
   - ウィンドウを中央・左上・右上・左下・右下に配置できます。
   - ゲームをディスプレイの実解像度より大きい解像度で表示していて右下のほうにある開始ボタンが押せず開始できない時に便利です。
+- スクリーンショット
+  - ウィンドウの画像を PNG としてピクチャフォルダー内の `StarlightResize` に保存し、クリップボードにもコピーします。
+  - HDR ディスプレイでは SDR 画像として保存したことを表示します。HDR の色や輝度を保持するキャプチャには対応していません。
 
 ## TODO
 
@@ -30,8 +33,25 @@ DISCLAIMER: このツールは MIT License でライセンスされています�
 
 ## How to Run
 
-1. インストールしていない場合は https://dotnet.microsoft.com/download/dotnet/5.0 から .NET 5 Desktop Runtime をインストールする
 1. [Releases](https://github.com/rinsuki/StarlightResize/releases) から zipをダウンロードして中にある StarlightResize.exe を実行する
+
+旧バージョンのリリースには .NET 5 Desktop Runtime が必要な場合があります。現在のソースから自己完結形式で発行したアプリには、別途 .NET Runtime をインストールする必要はありません。
+
+## Build from Source
+
+Windows と .NET 10 SDK が必要です。リポジトリのルートで実行してください。
+
+```powershell
+dotnet build StarlightResize.sln
+```
+
+自己完結形式の Windows x64 アプリを発行するには、次のコマンドを実行します。
+
+```powershell
+dotnet publish StarlightResize/StarlightResize.csproj -c Release
+```
+
+プロジェクトは NativeAOT を有効にしています。発行には Visual Studio または Build Tools の C++ ビルドツールと Windows SDK が必要です。
 
 ## FAQ
 

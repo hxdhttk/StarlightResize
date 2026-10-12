@@ -15,7 +15,18 @@ DeleteObject
 CreateCompatibleBitmap
 BitBlt
 
+MonitorFromWindow
+
 OpenClipboard
 CloseClipboard
 EmptyClipboard
 SetClipboardData
+
+CreateDXGIFactory1
+IDXGIFactory1
+IDXGIAdapter1
+IDXGIOutput
+IDXGIOutput6
+DXGI_OUTPUT_DESC
+DXGI_OUTPUT_DESC1
+DXGI_COLOR_SPACE_TYPE
