@@ -22,7 +22,10 @@ DISCLAIMER: このツールは MIT License でライセンスされています�
   - ゲームをディスプレイの実解像度より大きい解像度で表示していて右下のほうにある開始ボタンが押せず開始できない時に便利です。
 - スクリーンショット
   - ウィンドウの画像を PNG としてピクチャフォルダー内の `StarlightResize` に保存し、クリップボードにもコピーします。
-  - HDR ディスプレイでは SDR 画像として保存したことを表示します。HDR の色や輝度を保持するキャプチャには対応していません。
+  - HDR ディスプレイでは DXGI で浮動小数点画像を取得し、OpenEXR (`.exr`) と HDR AVIF (`.avif`) を保存します。EXR は線形 scRGB、16-bit HALF、1.0 = 80 cd/m² の元画像を保持します。AVIF は BT.2020 / PQ、10-bit、4:2:0 の圧縮画像です。Windows の AVIF 対応コーデックと HDR 表示に対応した「フォト」等で開いてください。
+  - AVIF 変換には `zscale` と `libaom-av1` に対応した FFmpeg が必要です。`ffmpeg.exe` をアプリと同じフォルダーに置くか PATH に追加してください。アプリと同じフォルダーを優先します。未インストール・変換失敗・2 分のタイムアウト時も EXR は保持し、警告を表示します。
+  - HDR キャプチャは画面に表示されている内容を取得します。他のウィンドウで隠さず、対象ウィンドウ全体を一つのディスプレイ内に配置してください。最小化、回転したディスプレイ、複数画面にまたがるウィンドウには未対応です。
+  - HDR 画像はクリップボードへコピーしません。SDR は従来どおり PNG 保存とクリップボードへのコピーを行います。HDR 取得失敗時はエラーを表示し、SDR 画像への自動変換は行いません。
 
 ## TODO
 
@@ -52,6 +55,16 @@ dotnet publish StarlightResize/StarlightResize.csproj -c Release
 ```
 
 プロジェクトは NativeAOT を有効にしています。発行には Visual Studio または Build Tools の C++ ビルドツールと Windows SDK が必要です。
+
+## HDR writer validation
+
+```powershell
+dotnet run --project tests/ExrWriterTests.csproj
+# FFmpeg と ffprobe が PATH にある場合、AVIF 変換も検証
+dotnet run --project tests/ExrWriterTests.csproj -- --ffmpeg
+```
+
+OpenEXR のヘッダー、チャンネル順、行オフセット、負の値と HDR ハイライトの保持を検証します。
 
 ## FAQ
 

@@ -330,7 +330,7 @@ namespace StarlightResize
             return starlightResizePicturesFolder;
         }
 
-        private void buttonScreenShot_Click(object sender, EventArgs e)
+        private async void buttonScreenShot_Click(object sender, EventArgs e)
         {
             // とりあえず保存先を作っておく
             var starlightResizePicturesFolder = GetScreenshotFolder();
@@ -350,6 +350,51 @@ namespace StarlightResize
             PInvoke.GetClientRect(hWnd, out var clientRect);
 
             var isHdrEnabled = HdrHelper.IsHdrEnabledForWindow(hWnd);
+            if (isHdrEnabled && OperatingSystem.IsWindowsVersionAtLeast(10, 0, 17134))
+            {
+                var screenshotButton = (Button)sender;
+                screenshotButton.Enabled = false;
+                labelScreenShotState.Text = "HDR キャプチャ中…";
+                try
+                {
+                    var hdrPath = Path.Combine(starlightResizePicturesFolder,
+                        $"{DateTime.Now:yyyyMMdd_HHmmss_fff}_{Guid.NewGuid():N}.exr");
+                    await System.Threading.Tasks.Task.Run(() =>
+                    {
+                        if (!OperatingSystem.IsWindowsVersionAtLeast(10, 0, 17134))
+                            throw new PlatformNotSupportedException();
+                        var pixels = HdrCapture.Capture(hWnd, out int width, out int height);
+                        using var data = new MemoryStream();
+                        ExrWriter.Write(data, width, height, pixels);
+                        using var file = new FileStream(hdrPath, FileMode.CreateNew, FileAccess.Write);
+                        data.Position = 0;
+                        data.CopyTo(file);
+                    });
+                    labelScreenShotState.Text = "HDR AVIF に変換中…";
+                    try
+                    {
+                        var avifPath = await HdrAvifConverter.ConvertAsync(hdrPath);
+                        labelScreenShotState.Text = $"{Path.GetFileName(avifPath)} に保存しました。 (HDR / EXR も保存)";
+                    }
+                    catch (Exception ex)
+                    {
+                        labelScreenShotState.Text = $"{Path.GetFileName(hdrPath)} に保存しました。 (AVIF 変換失敗)";
+                        MessageBox.Show(this,
+                            $"EXR 画像は保存されています。AVIF 変換に失敗しました。\nFFmpeg (zscale / libaom-av1 対応) を PATH またはアプリと同じフォルダーに配置してください。\n\n{ex.Message}",
+                            "HDR AVIF 変換", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    labelScreenShotState.Text = "HDR キャプチャに失敗しました。";
+                    MessageBox.Show(this, ex.Message, "HDR キャプチャ", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    screenshotButton.Enabled = true;
+                }
+                return;
+            }
 
             using var bitmap = new Bitmap(
                 clientRect.right - clientRect.left,
@@ -408,8 +453,7 @@ namespace StarlightResize
                 stream.Write(imageData);
             }
 
-            var hdrLabel = isHdrEnabled ? " (HDR ディスプレイ: SDR 画像として保存)" : "";
-            labelScreenShotState.Text = $"{Path.GetFileName(path)} に保存しました。{hdrLabel}";
+            labelScreenShotState.Text = $"{Path.GetFileName(path)} に保存しました。";
         }
 
         private void buttonOpenScreenShotFolder_Click(object sender, EventArgs e)
