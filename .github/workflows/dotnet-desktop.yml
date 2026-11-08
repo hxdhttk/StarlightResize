@@ -1,57 +1,115 @@
-name: .NET Core Desktop
+name: .NET Desktop
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [master]
+    tags: ['v*']
+    # GitHub applies path filters to branch pushes, not tag pushes.
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.markdown'
+      - '**/*.rst'
+      - 'docs/**'
+      - 'LICENSE.txt'
   pull_request:
-    branches: [ "master" ]
+    branches: [master]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.markdown'
+      - '**/*.rst'
+      - 'docs/**'
+      - 'LICENSE.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
-
   build:
-
-    strategy:
-      matrix:
-        configuration: [Release]
-
-    runs-on: windows-latest  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
-
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: pwsh
     env:
-      Solution_Name: StarlightResize.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
-      Project_Path: StarlightResize\StarlightResize.csproj
-      Artifacts_Path: StarlightResize\bin\Release\net7.0-windows\win-x64\publish
+      DOTNET_NOLOGO: 'true'
+      DOTNET_CLI_TELEMETRY_OPTOUT: 'true'
+      Project_Path: StarlightResize/StarlightResize.csproj
+      Artifacts_Path: artifacts/publish
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v7
 
-    # Install the .NET Core workload
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
+      - name: Install .NET 10
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
 
-    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      # The WIC tests reference the Debug assembly. Build it without AOT so
+      # the test process can load it; HDR/GPU tests require a physical display.
+      - name: Build application for codec tests
+        run: dotnet build $env:Project_Path --configuration Debug -p:SelfContained=false -p:PublishAot=false
 
-    # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+      - name: Test EXR encoding and screenshot filenames
+        run: dotnet run --project tests/ExrWriterTests.csproj
 
-    - name: Publish the application
-      run: dotnet publish $env:Project_Path --configuration $env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+      - name: Test native JXR encoding
+        run: dotnet run --project tests/HdrCaptureTests.csproj
 
-    # Upload the Zip package: https://github.com/marketplace/actions/upload-a-build-artifact
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: StarlightResize
-        path: ${{ env.Artifacts_Path }}\StarlightResize.exe
+      # Restore again with publishing properties; the test build used different
+      # runtime/AOT settings. dotnet publish performs the matching restore.
+      - name: Publish Windows x64 application
+        run: dotnet publish $env:Project_Path --configuration Release --runtime win-x64 --self-contained true --output $env:Artifacts_Path
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: StarlightResize-win-x64
+          path: ${{ env.Artifacts_Path }}/
+          if-no-files-found: error
+
+  release:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: windows-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: release-${{ github.ref }}
+      cancel-in-progress: false
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RELEASE_TAG: ${{ github.ref_name }}
+
+    steps:
+      - name: Download tested build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: StarlightResize-win-x64
+          path: artifacts/publish
+
+      - name: Package release
+        run: |
+          if (-not (Test-Path -LiteralPath artifacts/publish/StarlightResize.exe)) {
+            throw 'The build artifact does not contain StarlightResize.exe.'
+          }
+          $files = Get-ChildItem -LiteralPath artifacts/publish | Where-Object { $_.Extension -ne '.pdb' }
+          Compress-Archive -LiteralPath $files.FullName -DestinationPath artifacts/StarlightResize-win-x64.zip
+
+      - name: Create release or update its asset
+        run: |
+          gh release view $env:RELEASE_TAG --repo $env:GH_REPO --json tagName
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $env:RELEASE_TAG artifacts/StarlightResize-win-x64.zip --repo $env:GH_REPO --clobber
+          } else {
+            $releaseOptions = @('--verify-tag', '--generate-notes', '--title', $env:RELEASE_TAG)
+            if ($env:RELEASE_TAG -match '-') { $releaseOptions += '--prerelease' }
+            gh release create $env:RELEASE_TAG artifacts/StarlightResize-win-x64.zip --repo $env:GH_REPO @releaseOptions
+          }
+          if ($LASTEXITCODE -ne 0) { throw 'GitHub Release publication failed.' }

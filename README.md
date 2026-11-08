@@ -51,6 +51,12 @@ dotnet publish StarlightResize/StarlightResize.csproj -c Release
 
 プロジェクトは NativeAOT を有効にしています。発行には Visual Studio または Build Tools の C++ ビルドツールと Windows SDK が必要です。
 
+## GitHub Releases
+
+`v` で始まるバージョンタグ（例: `v1.0.0`）を push すると、ビルド・テストに成功した Actions artifact から `StarlightResize-win-x64.zip` を作成し、同じタグの GitHub Release に添付します。デバッグシンボル (`.pdb`) は ZIP に含めません。
+
+`v1.0.0-beta.1` のようにハイフンを含むタグはプレリリースになります。既存 Release のあるタグを再実行すると、同名 ZIP を置き換えます。通常のブランチ・PR ビルドと手動実行では Release を公開しません。
+
 ## HDR writer validation
 
 ```powershell
