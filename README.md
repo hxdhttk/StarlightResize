@@ -31,7 +31,7 @@ DISCLAIMER: このツールは MIT License でライセンスされています�
 
 ## How to Run
 
-1. [Releases](https://github.com/rinsuki/StarlightResize/releases) から zipをダウンロードして中にある StarlightResize.exe を実行する
+1. [Releases](https://github.com/hxdhttk/StarlightResize/releases) から zipをダウンロードして中にある StarlightResize.exe を実行する
 
 旧バージョンのリリースには .NET 5 Desktop Runtime が必要な場合があります。現在のソースから自己完結形式で発行したアプリには、別途 .NET Runtime をインストールする必要はありません。
 
