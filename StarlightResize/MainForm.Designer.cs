@@ -64,6 +64,7 @@ namespace StarlightResize
             numericUpDownWidthFactor = new System.Windows.Forms.NumericUpDown();
             numericUpDownLengthFactor = new System.Windows.Forms.NumericUpDown();
             checkBoxReverseAspectRatio = new System.Windows.Forms.CheckBox();
+            checkBoxKeepExr = new System.Windows.Forms.CheckBox();
             buttonResize = new System.Windows.Forms.Button();
             labelScreenShotState = new System.Windows.Forms.Label();
             tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
@@ -530,7 +531,14 @@ namespace StarlightResize
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            ClientSize = new System.Drawing.Size(700, 272);
+            checkBoxKeepExr.AutoSize = true;
+            checkBoxKeepExr.Location = new System.Drawing.Point(11, 272);
+            checkBoxKeepExr.Name = "checkBoxKeepExr";
+            checkBoxKeepExr.TabIndex = 29;
+            checkBoxKeepExr.Text = "HDR の EXR 元データも保存する";
+            checkBoxKeepExr.UseVisualStyleBackColor = true;
+            ClientSize = new System.Drawing.Size(700, 302);
+            Controls.Add(checkBoxKeepExr);
             Controls.Add(labelScreenShotState);
             Controls.Add(buttonOpenScreenShotFolder);
             Controls.Add(buttonScreenShot);
@@ -569,6 +577,7 @@ namespace StarlightResize
         private System.Windows.Forms.NumericUpDown numericUpDownWidth;
         private System.Windows.Forms.NumericUpDown numericUpDownHeight;
         private System.Windows.Forms.CheckBox checkBoxReverseAspectRatio;
+        private System.Windows.Forms.CheckBox checkBoxKeepExr;
         private System.Windows.Forms.Button buttonResize;
         private System.Windows.Forms.Label labelScreenShotState;
         private System.Windows.Forms.Label labelProcess;

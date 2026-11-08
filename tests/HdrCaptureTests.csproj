@@ -4,10 +4,12 @@
     <TargetFramework>net10.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NuGetAudit>false</NuGetAudit>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GpuCaptureTests.cs" />
+    <Compile Include="JxrRoundTripTests.cs" />
     <Reference Include="StarlightResize">
       <HintPath>../StarlightResize/bin/Debug/net10.0-windows/win-x64/StarlightResize.dll</HintPath>
     </Reference>

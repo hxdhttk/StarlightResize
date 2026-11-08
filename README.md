@@ -1,4 +1,4 @@
-# StarlightResize
+﻿# StarlightResize
 
 DISCLAIMER: このツールは MIT License でライセンスされています。ソフトウェアは「現状のまま」で、明示であるか暗黙であるかを問わず、何らの保証もなく提供されます。ここでいう保証とは、商品性、特定の目的への適合性、および権利非侵害についての保証も含みますが、それに限定されるものではありません。 作者または著作権者は、契約行為、不法行為、またはそれ以外であろうと、ソフトウェアに起因または関連し、あるいはソフトウェアの使用またはその他の扱いによって生じる一切の請求、損害、その他の義務について何らの責任も負わないものとします。 
 
@@ -22,10 +22,10 @@ DISCLAIMER: このツールは MIT License でライセンスされています�
   - ウィンドウを中央・左上・右上・左下・右下に配置できます。
   - ゲームをディスプレイの実解像度より大きい解像度で表示していて右下のほうにある開始ボタンが押せず開始できない時に便利です。
 - スクリーンショット
-  - ウィンドウの画像を PNG としてピクチャフォルダー内の `StarlightResize` に保存し、クリップボードにもコピーします。
-  - HDR ディスプレイでは DXGI で浮動小数点画像を取得し、OpenEXR (`.exr`) と HDR AVIF (`.avif`) を保存します。EXR は線形 scRGB、16-bit HALF、1.0 = 80 cd/m² の元画像を保持します。AVIF は BT.2020 / PQ、10-bit、4:2:0 の圧縮画像です。Windows の AVIF 対応コーデックと HDR 表示に対応した「フォト」等で開いてください。
-  - AVIF 変換には `zscale` と `libaom-av1` に対応した FFmpeg が必要です。`ffmpeg.exe` をアプリと同じフォルダーに置くか PATH に追加してください。アプリと同じフォルダーを優先します。未インストール・変換失敗・2 分のタイムアウト時も EXR は保持し、警告を表示します。
-  - 画像の幅や高さが奇数の場合、AVIF には右端・下端に最大 1 ピクセルの黒い余白を追加します（4:2:0 の制約）。EXR は元のサイズを保持します。ファイル名は `yyyyMMdd_HHmmss` とし、同名が存在する場合だけ `_1`、`_2`…を追加します。
+  - HDR ディスプレイでは Windows 標準の WIC エンコーダーで JPEG XR (`.jxr`) を保存します。線形 scRGB、16-bit HALF、無損失圧縮で元の色と輝度を保持します。FFmpeg は不要で、奇数サイズもそのまま保存します。
+  - 「HDR の EXR 元データも保存する」をオンにすると同名の OpenEXR (`.exr`) も保存します。既定はオフ（JXR のみ）です。SDR は従来どおり PNG 保存とクリップボードへのコピーを行います。
+  - ファイル名は `yyyyMMdd_HHmmss` とし、同名が存在する場合だけ `_1`、`_2`…を追加します。
+  - 保存先はピクチャフォルダー内の `StarlightResize` です。
   - HDR キャプチャは画面に表示されている内容を取得します。他のウィンドウで隠さず、対象ウィンドウ全体を一つのディスプレイ内に配置してください。最小化、回転したディスプレイ、複数画面にまたがるウィンドウには未対応です。
   - HDR 画像はクリップボードへコピーしません。SDR は従来どおり PNG 保存とクリップボードへのコピーを行います。HDR 取得失敗時はエラーを表示し、SDR 画像への自動変換は行いません。
 
@@ -62,17 +62,17 @@ dotnet publish StarlightResize/StarlightResize.csproj -c Release
 
 ```powershell
 dotnet run --project tests/ExrWriterTests.csproj
-# FFmpeg と ffprobe が PATH にある場合、AVIF 変換も検証
-dotnet run --project tests/ExrWriterTests.csproj -- --ffmpeg
 ```
 
 OpenEXR のヘッダー、チャンネル順、行オフセット、負の値と HDR ハイライトの保持を検証します。
 
-HDR デスクトップにアクセス可能な Windows 環境では、HDR が有効なディスプレイにテストウィンドウを表示して赤・緑・青の実ピクセルを検証できます。
+Windows 標準 WIC による JXR の無損失・浮動小数点ピクセルの読戻しを検証します。`--gpu` を付けると、HDR が有効なディスプレイにテストウィンドウを表示して赤・緑・青の実ピクセルも検証します。
 
 ```powershell
 dotnet build StarlightResize/StarlightResize.csproj -p:SelfContained=false -p:PublishAot=false
 dotnet run --project tests/HdrCaptureTests.csproj
+# HDR ディスプレイで実ピクセルの捕獲も検証する場合
+dotnet run --project tests/HdrCaptureTests.csproj -- --gpu
 ```
 
 ## FAQ

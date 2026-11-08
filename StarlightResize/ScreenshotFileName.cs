@@ -12,7 +12,7 @@ internal static class ScreenshotFileName
         {
             string stem = Path.Combine(directory, index == 0 ? prefix : $"{prefix}_{index}");
             // Keep HDR pairs together and avoid reusing the name of an existing screenshot.
-            if (!File.Exists(stem + ".exr") && !File.Exists(stem + ".avif") && !File.Exists(stem + ".png"))
+            if (!File.Exists(stem + ".exr") && !File.Exists(stem + ".jxr") && !File.Exists(stem + ".avif") && !File.Exists(stem + ".png"))
                 return stem + extension;
         }
     }

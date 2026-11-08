@@ -10,8 +10,10 @@ using Windows.Win32.Foundation;
 internal static class GpuCaptureTests
 {
     [STAThread]
-    private static void Main()
+    private static void Main(string[] arguments)
     {
+        JxrRoundTripTests.Run();
+        if (Array.IndexOf(arguments, "--gpu") < 0) return;
         var assembly = typeof(PInvoke).Assembly;
         var capture = assembly.GetType("StarlightResize.HdrCapture", true)
             .GetMethod("Capture", BindingFlags.NonPublic | BindingFlags.Static);
