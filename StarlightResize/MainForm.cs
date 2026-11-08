@@ -398,8 +398,7 @@ namespace StarlightResize
                 labelScreenShotState.Text = "HDR キャプチャ中…";
                 try
                 {
-                    var hdrPath = Path.Combine(starlightResizePicturesFolder,
-                        $"{DateTime.Now:yyyyMMdd_HHmmss_fff}_{Guid.NewGuid():N}.exr");
+                    var hdrPath = ScreenshotFileName.GetAvailablePath(starlightResizePicturesFolder, ".exr", DateTime.Now);
                     await System.Threading.Tasks.Task.Run(() =>
                     {
                         if (!OperatingSystem.IsWindowsVersionAtLeast(10, 0, 17134))
@@ -420,8 +419,11 @@ namespace StarlightResize
                     catch (Exception ex)
                     {
                         labelScreenShotState.Text = $"{Path.GetFileName(hdrPath)} に保存しました。 (AVIF 変換失敗)";
+                        var installHint = ex is System.ComponentModel.Win32Exception { NativeErrorCode: 2 or 3 }
+                            ? "FFmpeg (zscale / libaom-av1 対応) を PATH またはアプリと同じフォルダーに配置してください。\n"
+                            : "";
                         MessageBox.Show(this,
-                            $"EXR 画像は保存されています。AVIF 変換に失敗しました。\nFFmpeg (zscale / libaom-av1 対応) を PATH またはアプリと同じフォルダーに配置してください。\n\n{ex.Message}",
+                            $"EXR 画像は保存されています。AVIF 変換に失敗しました。\n{installHint}\n{ex.Message}",
                             "HDR AVIF 変換", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
@@ -473,23 +475,10 @@ namespace StarlightResize
                 imageData = stream.ToArray();
             }
 
-            static string GetNotExistsFileName(string prefix, string suffix, int i = 0)
-            {
-                if (i > 9)
-                    throw new Exception("ファイル多すぎです。");
-                var path = i == 0 ? $"{prefix}{suffix}" : $"{prefix}_{i}{suffix}";
-                if (!File.Exists(path))
-                    return path;
-                return GetNotExistsFileName(prefix, suffix, i + 1);
-            }
-
             ClipboardInterop.SetClipboardData(bitmap);
 
-            var path = GetNotExistsFileName(
-                $"{starlightResizePicturesFolder}\\{DateTime.Now:yyyyMMdd_HHmmss}",
-                ".png"
-            );
-            using (var stream = new FileStream(path, FileMode.Create))
+            var path = ScreenshotFileName.GetAvailablePath(starlightResizePicturesFolder, ".png", DateTime.Now);
+            using (var stream = new FileStream(path, FileMode.CreateNew))
             {
                 stream.Write(imageData);
             }

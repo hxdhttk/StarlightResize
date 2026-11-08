@@ -44,6 +44,30 @@ try { ExrWriter.Write(new MemoryStream(), 0, 1, Array.Empty<byte>()); throw new 
 catch (ArgumentException) { }
 Console.WriteLine("EXR readback passed: negative values, highlights, channel order, offsets and invalid dimensions.");
 
+string namingDirectory = Path.Combine(Path.GetTempPath(), "StarlightResize-names-" + Guid.NewGuid().ToString("N"));
+Directory.CreateDirectory(namingDirectory);
+try
+{
+    var timestamp = new DateTime(2026, 11, 8, 19, 20, 30);
+    string first = ScreenshotFileName.GetAvailablePath(namingDirectory, ".exr", timestamp);
+    Check(Path.GetFileName(first) == "20261108_192030.exr");
+    File.WriteAllText(first, "reserved");
+    for (int index = 1; index <= 12; index++)
+    {
+        string next = ScreenshotFileName.GetAvailablePath(namingDirectory, ".png", timestamp);
+        Check(Path.GetFileName(next) == $"20261108_192030_{index}.png");
+        File.WriteAllText(next, "reserved");
+    }
+    File.WriteAllText(Path.Combine(namingDirectory, "20261108_192030_13.avif"), "reserved");
+    Check(Path.GetFileName(ScreenshotFileName.GetAvailablePath(namingDirectory, ".exr", timestamp)) == "20261108_192030_14.exr");
+    Console.WriteLine("Short filename validation passed: timestamp, mixed formats and more than ten collisions.");
+}
+finally
+{
+    foreach (string file in Directory.GetFiles(namingDirectory)) File.Delete(file);
+    Directory.Delete(namingDirectory);
+}
+
 if (Array.IndexOf(args, "--ffmpeg") >= 0)
 {
     string directory = Path.Combine(Path.GetTempPath(), "StarlightResize-test-" + Guid.NewGuid().ToString("N"));
@@ -79,6 +103,36 @@ if (Array.IndexOf(args, "--ffmpeg") >= 0)
         string metadata = await process.StandardOutput.ReadToEndAsync();
         await process.WaitForExitAsync();
         Check(process.ExitCode == 0 && metadata.Contains("yuv420p10le") && metadata.Contains("bt2020") && metadata.Contains("smpte2084"));
+
+        foreach (var size in new[] { (3, 5), (3, 4), (4, 5), (4, 4), (1, 1) })
+        {
+            string oddInput = Path.Combine(directory, $"size-{size.Item1}x{size.Item2}.exr");
+            byte[] rgba = new byte[size.Item1 * size.Item2 * 8];
+            for (int i = 0; i < rgba.Length; i += 8)
+            {
+                // Nonzero HDR color and opaque alpha, rather than a black test image.
+                BitConverter.GetBytes(BitConverter.HalfToUInt16Bits((Half)4)).CopyTo(rgba, i);
+                BitConverter.GetBytes(BitConverter.HalfToUInt16Bits((Half)1)).CopyTo(rgba, i + 6);
+            }
+            using (var file = File.Create(oddInput)) ExrWriter.Write(file, size.Item1, size.Item2, rgba);
+            string oddOutput = await HdrAvifConverter.ConvertAsync(oddInput);
+            var dimensions = new System.Diagnostics.ProcessStartInfo("ffprobe")
+            {
+                UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true
+            };
+            foreach (string argument in new[] { "-v", "error", "-show_entries", "stream=width,height,pix_fmt,color_transfer", "-of", "json", oddOutput })
+                dimensions.ArgumentList.Add(argument);
+            using var dimensionProcess = System.Diagnostics.Process.Start(dimensions)!;
+            string json = await dimensionProcess.StandardOutput.ReadToEndAsync();
+            await dimensionProcess.WaitForExitAsync();
+            using var document = System.Text.Json.JsonDocument.Parse(json);
+            var encoded = document.RootElement.GetProperty("streams")[0];
+            Check(dimensionProcess.ExitCode == 0 && encoded.GetProperty("width").GetInt32() == (size.Item1 + 1) / 2 * 2 &&
+                encoded.GetProperty("height").GetInt32() == (size.Item2 + 1) / 2 * 2 &&
+                encoded.GetProperty("pix_fmt").GetString() == "yuv420p10le" &&
+                encoded.GetProperty("color_transfer").GetString() == "smpte2084");
+        }
+        Console.WriteLine("Odd-size HDR AVIF validation passed: odd width/height, even sizes and 1x1 input.");
 
         string invalid = Path.Combine(directory, "invalid.exr");
         File.WriteAllText(invalid, "not an EXR");

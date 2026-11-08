@@ -1,7 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup><OutputType>Exe</OutputType><TargetFramework>net10.0</TargetFramework><NuGetAudit>false</NuGetAudit><Nullable>enable</Nullable></PropertyGroup>
   <ItemGroup>
+    <Compile Remove="GpuCaptureTests.cs" />
     <Compile Include="../StarlightResize/ExrWriter.cs" Link="ExrWriter.cs" />
     <Compile Include="../StarlightResize/HdrAvifConverter.cs" Link="HdrAvifConverter.cs" />
+    <Compile Include="../StarlightResize/ScreenshotFileName.cs" Link="ScreenshotFileName.cs" />
   </ItemGroup>
 </Project>

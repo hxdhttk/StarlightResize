@@ -25,6 +25,7 @@ DISCLAIMER: このツールは MIT License でライセンスされています�
   - ウィンドウの画像を PNG としてピクチャフォルダー内の `StarlightResize` に保存し、クリップボードにもコピーします。
   - HDR ディスプレイでは DXGI で浮動小数点画像を取得し、OpenEXR (`.exr`) と HDR AVIF (`.avif`) を保存します。EXR は線形 scRGB、16-bit HALF、1.0 = 80 cd/m² の元画像を保持します。AVIF は BT.2020 / PQ、10-bit、4:2:0 の圧縮画像です。Windows の AVIF 対応コーデックと HDR 表示に対応した「フォト」等で開いてください。
   - AVIF 変換には `zscale` と `libaom-av1` に対応した FFmpeg が必要です。`ffmpeg.exe` をアプリと同じフォルダーに置くか PATH に追加してください。アプリと同じフォルダーを優先します。未インストール・変換失敗・2 分のタイムアウト時も EXR は保持し、警告を表示します。
+  - 画像の幅や高さが奇数の場合、AVIF には右端・下端に最大 1 ピクセルの黒い余白を追加します（4:2:0 の制約）。EXR は元のサイズを保持します。ファイル名は `yyyyMMdd_HHmmss` とし、同名が存在する場合だけ `_1`、`_2`…を追加します。
   - HDR キャプチャは画面に表示されている内容を取得します。他のウィンドウで隠さず、対象ウィンドウ全体を一つのディスプレイ内に配置してください。最小化、回転したディスプレイ、複数画面にまたがるウィンドウには未対応です。
   - HDR 画像はクリップボードへコピーしません。SDR は従来どおり PNG 保存とクリップボードへのコピーを行います。HDR 取得失敗時はエラーを表示し、SDR 画像への自動変換は行いません。
 
@@ -66,6 +67,13 @@ dotnet run --project tests/ExrWriterTests.csproj -- --ffmpeg
 ```
 
 OpenEXR のヘッダー、チャンネル順、行オフセット、負の値と HDR ハイライトの保持を検証します。
+
+HDR デスクトップにアクセス可能な Windows 環境では、HDR が有効なディスプレイにテストウィンドウを表示して赤・緑・青の実ピクセルを検証できます。
+
+```powershell
+dotnet build StarlightResize/StarlightResize.csproj -p:SelfContained=false -p:PublishAot=false
+dotnet run --project tests/HdrCaptureTests.csproj
+```
 
 ## FAQ
 

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NuGetAudit>false</NuGetAudit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="GpuCaptureTests.cs" />
+    <Reference Include="StarlightResize">
+      <HintPath>../StarlightResize/bin/Debug/net10.0-windows/win-x64/StarlightResize.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

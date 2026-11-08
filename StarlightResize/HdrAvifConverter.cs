@@ -28,7 +28,9 @@ internal static class HdrAvifConverter
         foreach (string argument in new[]
         {
             "-hide_banner", "-loglevel", "error", "-nostdin", "-n", "-i", Path.GetFullPath(exrPath),
-            "-vf", "format=gbrpf32le,zscale=pin=bt709:tin=linear:min=gbr:rin=full:p=bt2020:t=smpte2084:m=bt2020nc:r=limited:npl=80,format=yuv420p10le",
+            // Convert at full chroma resolution before padding; 4:2:0 needs even dimensions.
+            // Preserve every original pixel and add at most one black row/column.
+            "-vf", "format=gbrpf32le,zscale=pin=bt709:tin=linear:min=gbr:rin=full:p=bt2020:t=smpte2084:m=bt2020nc:r=limited:npl=80,format=yuv444p10le,pad=ceil(iw/2)*2:ceil(ih/2)*2:0:0:color=black,format=yuv420p10le",
             "-frames:v", "1", "-c:v", "libaom-av1", "-still-picture", "1", "-crf", "12", "-cpu-used", "6",
             "-color_primaries", "bt2020", "-color_trc", "smpte2084", "-colorspace", "bt2020nc", "-color_range", "tv", temporary
         })

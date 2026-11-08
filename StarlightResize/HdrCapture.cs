@@ -77,8 +77,29 @@ internal static unsafe class HdrCapture
                 // The format check below still rejects any SDR conversion.
                 output6->DuplicateOutput((IUnknown*)device, &duplication);
             }
-            duplication->AcquireNextFrame(2000, out var info, &resource);
-            acquired = true;
+            var deadline = Environment.TickCount64 + 3000;
+            do
+            {
+                DXGI_OUTDUPL_FRAME_INFO info;
+                try
+                {
+                    duplication->AcquireNextFrame(500, out info, &resource);
+                }
+                catch (COMException ex) when (ex.HResult == unchecked((int)0x887A0027))
+                {
+                    if (Environment.TickCount64 >= deadline)
+                        throw new TimeoutException("デスクトップ画像を取得できませんでした。再試行してください。", ex);
+                    continue;
+                }
+                acquired = true;
+                // A successful AcquireNextFrame may report only a mouse update.
+                // The initial resource can then be completely empty; wait for desktop pixels.
+                if (info.LastPresentTime != 0) break;
+                resource->Release(); resource = null;
+                duplication->ReleaseFrame(); acquired = false;
+                if (Environment.TickCount64 >= deadline)
+                    throw new TimeoutException("デスクトップ画像を取得できませんでした。再試行してください。");
+            } while (true);
             resource->QueryInterface(out texture).ThrowOnFailure();
             texture->GetDesc(out var desc);
             if (desc.Format != DXGI_FORMAT.DXGI_FORMAT_R16G16B16A16_FLOAT)
