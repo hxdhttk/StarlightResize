@@ -130,6 +130,7 @@ namespace StarlightResize
             comboBoxDisplay.Name = "comboBoxDisplay";
             comboBoxDisplay.Size = new System.Drawing.Size(605, 23);
             comboBoxDisplay.TabIndex = 3;
+            comboBoxDisplay.SelectedIndexChanged += comboBoxDisplay_SelectedIndexChanged;
             // 
             // labelDisplay
             // 
@@ -456,6 +457,7 @@ namespace StarlightResize
             // 
             numericUpDownWidthFactor.Location = new System.Drawing.Point(168, 17);
             numericUpDownWidthFactor.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownWidthFactor.Maximum = 65535;
             numericUpDownWidthFactor.Name = "numericUpDownWidthFactor";
             numericUpDownWidthFactor.Size = new System.Drawing.Size(40, 23);
             numericUpDownWidthFactor.TabIndex = 14;
@@ -466,6 +468,7 @@ namespace StarlightResize
             // 
             numericUpDownLengthFactor.Location = new System.Drawing.Point(87, 17);
             numericUpDownLengthFactor.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownLengthFactor.Maximum = 65535;
             numericUpDownLengthFactor.Name = "numericUpDownLengthFactor";
             numericUpDownLengthFactor.Size = new System.Drawing.Size(40, 23);
             numericUpDownLengthFactor.TabIndex = 13;

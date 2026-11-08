@@ -27,6 +27,8 @@ namespace StarlightResize
 
         private int WidthFactor => (int)numericUpDownWidthFactor.Value;
 
+        private bool _updatingResolution;
+
         private RadioButton[] _radioButtonPosList =>
             new RadioButton[]
             {
@@ -47,8 +49,9 @@ namespace StarlightResize
 
             if (comboBoxDisplay.Items.Count > 0)
             {
-                comboBoxDisplay.SelectedItem = comboBoxDisplay.Items[0];
-                SetResToDisplay();
+                comboBoxDisplay.SelectedItem = Screen.FromControl(this);
+                if (comboBoxDisplay.SelectedIndex < 0)
+                    comboBoxDisplay.SelectedIndex = 0;
             }
         }
 
@@ -233,19 +236,27 @@ namespace StarlightResize
 
         private void SetResolution(int width, int height)
         {
-            numericUpDownWidth.Value = width;
-            numericUpDownHeight.Value = height;
+            _updatingResolution = true;
+            try
+            {
+                numericUpDownWidth.Value = Math.Clamp(width, numericUpDownWidth.Minimum, numericUpDownWidth.Maximum);
+                numericUpDownHeight.Value = Math.Clamp(height, numericUpDownHeight.Minimum, numericUpDownHeight.Maximum);
+            }
+            finally
+            {
+                _updatingResolution = false;
+            }
         }
 
         private void buttonSetResTo1280_Click(object sender, EventArgs e)
         {
             if (IsAspectRatioReversed)
             {
-                SetResolution(720 / LengthFactor * WidthFactor, 720);
+                SetResolution((int)Math.Round(720m * WidthFactor / LengthFactor), 720);
             }
             else
             {
-                SetResolution(1280, 1280 / LengthFactor * WidthFactor);
+                SetResolution(1280, (int)Math.Round(1280m * WidthFactor / LengthFactor));
             }
         }
 
@@ -253,11 +264,11 @@ namespace StarlightResize
         {
             if (IsAspectRatioReversed)
             {
-                SetResolution(1080 / LengthFactor * WidthFactor, 1080);
+                SetResolution((int)Math.Round(1080m * WidthFactor / LengthFactor), 1080);
             }
             else
             {
-                SetResolution(1920, 1920 / LengthFactor * WidthFactor);
+                SetResolution(1920, (int)Math.Round(1920m * WidthFactor / LengthFactor));
             }
         }
 
@@ -265,11 +276,11 @@ namespace StarlightResize
         {
             if (IsAspectRatioReversed)
             {
-                SetResolution(1440 / LengthFactor * WidthFactor, 1440);
+                SetResolution((int)Math.Round(1440m * WidthFactor / LengthFactor), 1440);
             }
             else
             {
-                SetResolution(2560, 2560 / LengthFactor * WidthFactor);
+                SetResolution(2560, (int)Math.Round(2560m * WidthFactor / LengthFactor));
             }
         }
 
@@ -277,20 +288,25 @@ namespace StarlightResize
         {
             if (IsAspectRatioReversed)
             {
-                SetResolution(2160 / LengthFactor * WidthFactor, 2160);
+                SetResolution((int)Math.Round(2160m * WidthFactor / LengthFactor), 2160);
             }
             else
             {
-                SetResolution(3840, 3840 / LengthFactor * WidthFactor);
+                SetResolution(3840, (int)Math.Round(3840m * WidthFactor / LengthFactor));
             }
         }
 
         private void buttonSetResToDisplay_Click(object sender, EventArgs e)
         {
-            SetResToDisplay();
+            SetResToDisplay(useScreenAspectRatio: true);
         }
 
-        private void SetResToDisplay()
+        private void comboBoxDisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetResToDisplay(useScreenAspectRatio: true);
+        }
+
+        private void SetResToDisplay(bool useScreenAspectRatio = false)
         {
             if (comboBoxDisplay.SelectedItem is not Screen screen)
             {
@@ -303,10 +319,16 @@ namespace StarlightResize
                 return;
             }
 
+            if (useScreenAspectRatio)
+            {
+                SetScreenAspectRatio(screen.Bounds.Size);
+                return;
+            }
+
             if (IsAspectRatioReversed)
             {
                 SetResolution(
-                    (screen.Bounds.Height / LengthFactor) * WidthFactor,
+                    (int)Math.Round((decimal)screen.Bounds.Height * WidthFactor / LengthFactor),
                     screen.Bounds.Height
                 );
             }
@@ -314,9 +336,28 @@ namespace StarlightResize
             {
                 SetResolution(
                     screen.Bounds.Width,
-                    (screen.Bounds.Width / LengthFactor) * WidthFactor
+                    (int)Math.Round((decimal)screen.Bounds.Width * WidthFactor / LengthFactor)
                 );
             }
+        }
+
+        private void SetScreenAspectRatio(Size resolution)
+        {
+            int width = resolution.Width, height = resolution.Height;
+            int a = width, b = height;
+            while (b != 0) (a, b) = (b, a % b);
+            _updatingResolution = true;
+            try
+            {
+                numericUpDownLengthFactor.Value = Math.Max(width, height) / a;
+                numericUpDownWidthFactor.Value = Math.Min(width, height) / a;
+                checkBoxReverseAspectRatio.Checked = height > width;
+            }
+            finally
+            {
+                _updatingResolution = false;
+            }
+            SetResolution(width, height);
         }
 
         private static string GetScreenshotFolder()
@@ -463,6 +504,7 @@ namespace StarlightResize
 
         private void numericUpDownWidth_ValueChanged(object sender, EventArgs e)
         {
+            if (_updatingResolution) return;
             var currentValue = numericUpDownWidth.Value;
 
             decimal heightValue;
@@ -475,11 +517,12 @@ namespace StarlightResize
                 heightValue = (currentValue / LengthFactor) * WidthFactor;
             }
 
-            numericUpDownHeight.Value = heightValue;
+            SetResolution((int)currentValue, (int)Math.Round(heightValue));
         }
 
         private void numericUpDownHeight_ValueChanged(object sender, EventArgs e)
         {
+            if (_updatingResolution) return;
             var currentValue = numericUpDownHeight.Value;
 
             decimal widthValue;
@@ -492,12 +535,12 @@ namespace StarlightResize
                 widthValue = (currentValue / WidthFactor) * LengthFactor;
             }
 
-            numericUpDownWidth.Value = widthValue;
+            SetResolution((int)Math.Round(widthValue), (int)currentValue);
         }
 
         private void checkBoxReverseAspectRatio_CheckStateChanged(object sender, EventArgs e)
         {
-            buttonSetResToDisplay_Click(sender, e);
+            if (!_updatingResolution) SetResToDisplay();
         }
 
         public class ProcessItem
